@@ -8,23 +8,25 @@ import { IntakeInput } from "./IntakeInput";
 import { IntakeResponse } from "./IntakeResponse";
 import { useSessionStore } from "@/lib/state";
 import { INSTITUTION_OPTIONS } from "@/lib/constants/copy";
-import type { IntakeResponse as IntakeResponseType } from "@/lib/types";
+import type { IntakeResponse as IntakeResponseType, Pathway } from "@/lib/types";
+
+type Phase = "input" | "streaming" | "confirming" | "loading";
 
 export function IntakeContainer() {
   const router = useRouter();
   const { setSession, setEmotionalMode } = useSessionStore();
 
-  const [phase, setPhase] = useState<"input" | "streaming" | "confirming">("input");
+  const [phase, setPhase] = useState<Phase>("input");
   const [partialContent, setPartialContent] = useState("");
   const [intakeResult, setIntakeResult] = useState<IntakeResponseType | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const institutionId = INSTITUTION_OPTIONS[0].id;
 
   async function handleSubmit(description: string) {
     setPhase("streaming");
     setPartialContent("");
     setError(null);
-
-    const institutionId = INSTITUTION_OPTIONS[0].id;
 
     try {
       const response = await fetch("/api/intake", {
@@ -43,7 +45,6 @@ export function IntakeContainer() {
         return;
       }
 
-      // Simulate streaming by revealing text gradually
       const summary = json.data.barrierSummary;
       let index = 0;
       const interval = setInterval(() => {
@@ -62,65 +63,72 @@ export function IntakeContainer() {
   }
 
   async function handleConfirm() {
-    if (!intakeResult) return;
+    if (!intakeResult || phase === "loading") return;
+    setPhase("loading");
+    setError(null);
 
-    setEmotionalMode(intakeResult.emotionalMode);
+    try {
+      const response = await fetch("/api/pathway", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          matchedBarrierIds: intakeResult.matchedBarrierIds,
+          matchedAccommodationIds: intakeResult.matchedAccommodationIds,
+          institutionId,
+          emotionalMode: intakeResult.emotionalMode,
+        }),
+      });
 
-    const response = await fetch("/api/pathway", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        matchedBarrierIds: intakeResult.matchedBarrierIds,
-        matchedAccommodationIds: intakeResult.matchedAccommodationIds,
-        institutionId: INSTITUTION_OPTIONS[0].id,
-        emotionalMode: intakeResult.emotionalMode,
-      }),
-    });
+      const json = await response.json() as
+        | { success: true; data: { pathway: Pathway } }
+        | { success: false; error: { userMessage: string } };
 
-    const json = await response.json() as
-      | { success: true; data: { pathway: import("@/lib/types").Pathway } }
-      | { success: false; error: { userMessage: string } };
+      if (!json.success) {
+        setError(json.error.userMessage);
+        setPhase("confirming");
+        return;
+      }
 
-    if (!json.success) {
-      setError(json.error.userMessage);
-      return;
-    }
-
-    const now = new Date().toISOString();
-
-    setSession({
-      id: Math.random().toString(36).slice(2),
-      intakeSession: {
+      const now = new Date().toISOString();
+      setEmotionalMode(intakeResult.emotionalMode);
+      setSession({
         id: Math.random().toString(36).slice(2),
-        barrierSummary: intakeResult.barrierSummary,
-        matchedBarrierIds: intakeResult.matchedBarrierIds,
-        matchedAccommodationIds: intakeResult.matchedAccommodationIds,
-        institutionId: INSTITUTION_OPTIONS[0].id,
+        intakeSession: {
+          id: Math.random().toString(36).slice(2),
+          barrierSummary: intakeResult.barrierSummary,
+          matchedBarrierIds: intakeResult.matchedBarrierIds,
+          matchedAccommodationIds: intakeResult.matchedAccommodationIds,
+          institutionId,
+          emotionalMode: intakeResult.emotionalMode,
+          createdAt: now,
+        },
+        pathway: json.data.pathway,
+        position: {
+          pathwayId: json.data.pathway.id,
+          activeNodeId: json.data.pathway.activeNodeId,
+          completedNodeIds: [],
+          pendingThreadIds: [],
+        },
+        artifacts: [],
+        pendingThreads: [],
         emotionalMode: intakeResult.emotionalMode,
+        languageMode: "PLAIN",
         createdAt: now,
-      },
-      pathway: json.data.pathway,
-      position: {
-        pathwayId: json.data.pathway.id,
-        activeNodeId: json.data.pathway.activeNodeId,
-        completedNodeIds: [],
-        pendingThreadIds: [],
-      },
-      artifacts: [],
-      pendingThreads: [],
-      emotionalMode: intakeResult.emotionalMode,
-      languageMode: "PLAIN",
-      createdAt: now,
-      updatedAt: now,
-    });
+        updatedAt: now,
+      });
 
-    router.push("/pathway");
+      router.push("/pathway");
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setPhase("confirming");
+    }
   }
 
   function handleDeny() {
     setPhase("input");
     setIntakeResult(null);
     setPartialContent("");
+    setError(null);
   }
 
   return (
@@ -135,17 +143,7 @@ export function IntakeContainer() {
         </>
       )}
 
-      {(phase === "streaming" || phase === "confirming") && intakeResult && (
-        <IntakeResponse
-          barrierSummary={intakeResult.barrierSummary}
-          isStreaming={phase === "streaming"}
-          partialContent={partialContent}
-          onConfirm={handleConfirm}
-          onDeny={handleDeny}
-        />
-      )}
-
-      {phase === "streaming" && !intakeResult && (
+      {phase === "streaming" && (
         <IntakeResponse
           barrierSummary=""
           isStreaming={true}
@@ -153,6 +151,27 @@ export function IntakeContainer() {
           onConfirm={handleConfirm}
           onDeny={handleDeny}
         />
+      )}
+
+      {phase === "confirming" && intakeResult && (
+        <>
+          <IntakeResponse
+            barrierSummary={intakeResult.barrierSummary}
+            isStreaming={false}
+            partialContent=""
+            onConfirm={handleConfirm}
+            onDeny={handleDeny}
+          />
+          {error && (
+            <p className="text-sm text-warning" role="alert">{error}</p>
+          )}
+        </>
+      )}
+
+      {phase === "loading" && (
+        <div className="text-body text-neutral-400 animate-pulse">
+          Building your pathway...
+        </div>
       )}
     </div>
   );

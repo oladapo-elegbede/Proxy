@@ -22,6 +22,14 @@ function getClient() {
   return createGroq({ apiKey });
 }
 
+function cleanJson(text: string): string {
+  return text
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```\s*$/i, "")
+    .trim();
+}
+
 export async function runIntakePipeline(
   input: IntakeRequest
 ): Promise<PipelineResult<IntakeResponse>> {
@@ -54,7 +62,7 @@ export async function runIntakePipeline(
 
     let parsed: IntakeResponse;
     try {
-      parsed = JSON.parse(text) as IntakeResponse;
+      parsed = JSON.parse(cleanJson(text)) as IntakeResponse;
     } catch {
       return {
         success: false,

@@ -10,7 +10,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const start = Date.now();
   const ip = request.headers.get("x-forwarded-for") ?? "unknown";
 
-  // Rate limit check
   if (!checkRateLimit(ip, "pathway")) {
     return NextResponse.json(
       {
@@ -25,7 +24,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Parse body
   let body: PathwayRequest;
   try {
     body = (await request.json()) as PathwayRequest;
@@ -43,12 +41,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Validate required fields
-  if (
-    !body.institutionId ||
-    !body.matchedBarrierIds?.length ||
-    !body.matchedAccommodationIds?.length
-  ) {
+  // Only require institutionId and at least one barrier
+  if (!body.institutionId || !body.matchedBarrierIds?.length) {
     return NextResponse.json(
       {
         success: false,
@@ -62,7 +56,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Run pipeline
   const result = await runPathwayPipeline(body);
   const duration = Date.now() - start;
 

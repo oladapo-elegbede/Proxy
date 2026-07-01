@@ -23,6 +23,14 @@ function getClient() {
   return createGroq({ apiKey });
 }
 
+function cleanJson(text: string): string {
+  return text
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```\s*$/i, "")
+    .trim();
+}
+
 export async function runPathwayPipeline(
   input: PathwayRequest
 ): Promise<PipelineResult<PathwayResponse>> {
@@ -35,7 +43,7 @@ export async function runPathwayPipeline(
         code: "INSTITUTION_NOT_FOUND",
         message: `Institution not found: ${input.institutionId}`,
         userMessage:
-          "We don't have specific information about your institution yet. We're working on adding more institutions.",
+          "We don't have specific information about your institution yet.",
       },
     };
   }
@@ -61,7 +69,7 @@ export async function runPathwayPipeline(
 
     let pathway: PathwayResponse["pathway"];
     try {
-      pathway = JSON.parse(text) as PathwayResponse["pathway"];
+      pathway = JSON.parse(cleanJson(text)) as PathwayResponse["pathway"];
     } catch {
       return {
         success: false,
