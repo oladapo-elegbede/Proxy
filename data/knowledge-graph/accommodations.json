@@ -1,0 +1,346 @@
+[
+  {
+    "id": "acc-extended-deadlines",
+    "formalName": "Extended Deadline Accommodation",
+    "plainLanguageDescription": "You get extra time to submit assignments without any academic penalty.",
+    "whatChangesInPractice": "When an assignment is due, you have an agreed number of additional days to submit. Your grade is not affected by using this extension. You do not need to explain yourself each time — the accommodation covers you.",
+    "barrierIds": [
+      "barrier-task-initiation",
+      "barrier-time-blindness",
+      "barrier-organization-planning",
+      "barrier-written-expression",
+      "barrier-emotional-regulation"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Other students do not receive extra time on assignments.",
+        "response": "This adjustment levels the playing field. The additional time compensates for a documented functional barrier, not a lack of effort or ability."
+      },
+      {
+        "objection": "The deadline is the same for everyone to ensure fairness.",
+        "response": "Equal treatment is not the same as equitable treatment. Providing the same deadline to students with different functional abilities is not fair — it disadvantages students whose barriers directly affect time management."
+      }
+    ],
+    "legalBasis": {
+      "description": "Institutions receiving federal funding must provide reasonable adjustments for documented disabilities that affect academic performance.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-extended-exam-time",
+    "formalName": "Extended Time on Examinations",
+    "plainLanguageDescription": "You get extra time during exams — typically time and a half or double time — so timed assessments measure what you know, not how fast you can write.",
+    "whatChangesInPractice": "Instead of the standard exam duration, you are given additional time — usually 1.5x or 2x the standard. This is arranged in advance through disability services and confirmed with your professor before each exam.",
+    "barrierIds": [
+      "barrier-processing-speed",
+      "barrier-reading-decoding",
+      "barrier-written-expression",
+      "barrier-attention-maintenance",
+      "barrier-emotional-regulation",
+      "barrier-working-memory",
+      "barrier-verbal-communication"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Extended time gives an unfair advantage.",
+        "response": "Extended time removes an unfair disadvantage. For students with processing speed or reading difficulties, standard timed exams measure speed rather than knowledge. This accommodation restores the assessment to measuring what it is supposed to measure."
+      },
+      {
+        "objection": "We cannot accommodate extended time in our exam room.",
+        "response": "Many institutions have dedicated testing centers with flexible scheduling specifically for this accommodation. I would like to discuss what options are available here."
+      }
+    ],
+    "legalBasis": {
+      "description": "Extended time is one of the most well-established and legally supported accommodations in higher education for students with processing, reading, or attention-related disabilities.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-reduced-distraction-environment",
+    "formalName": "Reduced Distraction Testing Environment",
+    "plainLanguageDescription": "You take exams in a quieter, less crowded space so that the environment does not interfere with your ability to show what you know.",
+    "whatChangesInPractice": "Instead of taking exams in a large hall with many other students, you are placed in a smaller room or dedicated testing center with fewer distractions. This is arranged through disability services before each exam period.",
+    "barrierIds": [
+      "barrier-attention-maintenance",
+      "barrier-sensory-overwhelm",
+      "barrier-auditory-processing",
+      "barrier-emotional-regulation"
+    ],
+    "commonObjections": [
+      {
+        "objection": "We do not have a separate room available.",
+        "response": "I would like to work together to find a practical solution. Even a smaller classroom or office space during the exam period would meet this need."
+      }
+    ],
+    "legalBasis": {
+      "description": "Providing an appropriate testing environment is a standard reasonable accommodation under disability law for students whose conditions are affected by sensory or attentional factors.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-written-instructions",
+    "formalName": "Written Instructions and Assignment Clarification",
+    "plainLanguageDescription": "You receive all important instructions, expectations, and assignment details in writing so you can refer back to them as many times as you need.",
+    "whatChangesInPractice": "Verbal instructions given in class are followed up with a written version via email or the course portal. Assignment expectations are written out clearly rather than communicated only verbally.",
+    "barrierIds": [
+      "barrier-auditory-processing",
+      "barrier-working-memory",
+      "barrier-social-communication"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Instructions are already on the syllabus.",
+        "response": "The accommodation specifically covers verbal instructions given during class that supplement or clarify the syllabus, which are not always captured in written form."
+      }
+    ],
+    "legalBasis": {
+      "description": "Providing written versions of verbal instructions is a low-cost, high-impact accommodation supported under reasonable adjustment requirements.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-recording-lectures",
+    "formalName": "Permission to Record Lectures",
+    "plainLanguageDescription": "You are allowed to record lectures for your personal use so you can replay and process the material at your own pace.",
+    "whatChangesInPractice": "You may use a personal device or approved app to record audio or video of lectures. Recordings are for your personal academic use only and are not shared.",
+    "barrierIds": [
+      "barrier-auditory-processing",
+      "barrier-working-memory",
+      "barrier-attention-maintenance",
+      "barrier-processing-speed"
+    ],
+    "commonObjections": [
+      {
+        "objection": "I do not allow recordings to protect my intellectual property.",
+        "response": "The recording is strictly for this student's personal academic use and is not distributed. This is a well-established accommodation that does not compromise intellectual property rights in practice."
+      }
+    ],
+    "legalBasis": {
+      "description": "Permission to record lectures for personal use is a recognized reasonable accommodation for students with auditory processing, attention, or memory-related disabilities.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-note-taker",
+    "formalName": "Peer Note-Taking Support",
+    "plainLanguageDescription": "A volunteer classmate shares their notes with you so that taking notes does not prevent you from concentrating on understanding the lecture.",
+    "whatChangesInPractice": "Disability services arranges for a peer volunteer in your class to share their notes. You still attend class — the notes supplement your own engagement rather than replacing it.",
+    "barrierIds": [
+      "barrier-working-memory",
+      "barrier-auditory-processing",
+      "barrier-attention-maintenance"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Students should take their own notes as part of the learning process.",
+        "response": "For students with working memory or auditory processing difficulties, the act of taking notes actively prevents them from processing the lecture content. Peer notes allow full cognitive engagement with the material."
+      }
+    ],
+    "legalBasis": {
+      "description": "Peer note-taking is a standard auxiliary aid recognized under disability law for students whose conditions interfere with simultaneous listening and writing.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-preferential-seating",
+    "formalName": "Preferential Seating",
+    "plainLanguageDescription": "You can choose where you sit in the classroom — near the front, near the door, or away from sources of distraction — without needing to explain yourself each time.",
+    "whatChangesInPractice": "Your accommodation letter notifies professors that you are permitted to select your seat based on your needs. You do not need to justify your choice to anyone.",
+    "barrierIds": [
+      "barrier-auditory-processing",
+      "barrier-sensory-overwhelm",
+      "barrier-attention-maintenance"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Seating is assigned in this class.",
+        "response": "Preferential seating is a standard accommodation that takes precedence over assigned seating policies for students with documented needs."
+      }
+    ],
+    "legalBasis": {
+      "description": "Preferential seating is a widely recognized, minimally disruptive accommodation for students with sensory, attentional, or physical needs.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-alternative-format-materials",
+    "formalName": "Alternative Format Course Materials",
+    "plainLanguageDescription": "Course materials are provided in a format that works for your brain — such as digital text you can resize, audio versions, or high-contrast documents.",
+    "whatChangesInPractice": "Textbooks, readings, and handouts are made available in your preferred accessible format. This may include digital PDFs, text-to-speech compatible files, or enlarged print.",
+    "barrierIds": [
+      "barrier-reading-decoding",
+      "barrier-sensory-overwhelm",
+      "barrier-processing-speed"
+    ],
+    "commonObjections": [
+      {
+        "objection": "We only have print versions of these materials.",
+        "response": "The institution has an obligation to provide materials in accessible formats. Disability services can assist in sourcing or converting materials."
+      }
+    ],
+    "legalBasis": {
+      "description": "Providing accessible format materials is a core requirement under disability law, particularly for students with print disabilities.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II, Chafee Amendment"
+    }
+  },
+  {
+    "id": "acc-text-to-speech",
+    "formalName": "Text-to-Speech Assistive Technology",
+    "plainLanguageDescription": "You are permitted and supported to use text-to-speech software to have written content read aloud to you.",
+    "whatChangesInPractice": "You may use approved text-to-speech tools during class, assignments, and exams where reading is required. The institution supports access to these tools.",
+    "barrierIds": [
+      "barrier-reading-decoding",
+      "barrier-processing-speed"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Using text-to-speech during exams gives an unfair advantage.",
+        "response": "Text-to-speech removes a barrier for students with reading disabilities. It does not provide additional information — it simply makes the existing text accessible."
+      }
+    ],
+    "legalBasis": {
+      "description": "Assistive technology is a recognized reasonable accommodation and auxiliary aid under disability law.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-speech-to-text",
+    "formalName": "Speech-to-Text Assistive Technology",
+    "plainLanguageDescription": "You are permitted and supported to use speech-to-text software to dictate your written work instead of typing or handwriting.",
+    "whatChangesInPractice": "You may use approved speech-to-text tools for assignments and exams where written responses are required. This allows you to demonstrate knowledge through spoken language.",
+    "barrierIds": [
+      "barrier-written-expression",
+      "barrier-processing-speed"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Written assignments require typing or handwriting.",
+        "response": "Speech-to-text is an assistive technology accommodation. It does not change what the student is being assessed on — it removes a barrier to demonstrating that knowledge."
+      }
+    ],
+    "legalBasis": {
+      "description": "Speech-to-text is a recognized assistive technology accommodation for students with written expression or motor difficulties.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-flexible-attendance",
+    "formalName": "Flexible Attendance Policy",
+    "plainLanguageDescription": "You have an agreed number of additional absences that do not count against your grade, for days when your condition makes attendance genuinely impossible.",
+    "whatChangesInPractice": "Your professor is notified that you have a flexible attendance accommodation. A specific number of additional absences are permitted without academic penalty. This is not unlimited — it is a defined, agreed adjustment.",
+    "barrierIds": [
+      "barrier-sensory-overwhelm",
+      "barrier-transitions",
+      "barrier-emotional-regulation"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Attendance is mandatory in this course.",
+        "response": "Flexible attendance is a reasonable accommodation for students whose disability directly affects their ability to attend consistently. I am not asking to skip class — I am asking for protection on days when my condition makes attendance impossible despite my best efforts."
+      }
+    ],
+    "legalBasis": {
+      "description": "Flexible attendance is a recognized accommodation where attendance directly relates to a student's disability, provided it does not fundamentally alter the course requirements.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-deadline-reminders",
+    "formalName": "Advance Deadline Reminder Support",
+    "plainLanguageDescription": "You receive advance reminders about upcoming deadlines so that time blindness does not cause you to miss work you are fully capable of completing.",
+    "whatChangesInPractice": "Your professor or disability services sends you a reminder a set number of days before major deadlines. This is a simple, low-burden adjustment with significant impact.",
+    "barrierIds": [
+      "barrier-time-blindness",
+      "barrier-organization-planning"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Deadlines are already posted on the syllabus.",
+        "response": "For students with time perception difficulties, knowing a deadline exists and being able to feel its approach are different things. A proactive reminder bridges this gap."
+      }
+    ],
+    "legalBasis": {
+      "description": "Proactive deadline reminders are a low-cost reasonable adjustment supporting students with executive function or time perception difficulties.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-task-chunking",
+    "formalName": "Assignment Chunking and Interim Check-ins",
+    "plainLanguageDescription": "Large assignments are broken into smaller pieces with interim check-in points so that the full scope of a project does not become a barrier to starting.",
+    "whatChangesInPractice": "For major assignments, you and your professor agree on interim milestones. You submit smaller portions at agreed intervals rather than everything at once. This does not reduce the work — it restructures how it is submitted.",
+    "barrierIds": [
+      "barrier-task-initiation",
+      "barrier-organization-planning"
+    ],
+    "commonObjections": [
+      {
+        "objection": "I cannot monitor interim submissions for every student.",
+        "response": "This accommodation applies only to my work. The check-ins can be lightweight — even a brief email confirmation that a section is complete. The structure itself is what makes the difference."
+      }
+    ],
+    "legalBasis": {
+      "description": "Restructuring assignment submission as an accommodation for executive function difficulties is supported under reasonable adjustment requirements.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-alternative-participation",
+    "formalName": "Alternative Participation Methods",
+    "plainLanguageDescription": "You can demonstrate participation and engagement in ways other than speaking aloud in class — such as written responses, online discussion boards, or one-on-one check-ins.",
+    "whatChangesInPractice": "Class participation grades are assessed through agreed alternative methods. You might post responses online, submit written reflections, or meet briefly with the professor instead of contributing verbally in class.",
+    "barrierIds": [
+      "barrier-social-communication",
+      "barrier-verbal-communication",
+      "barrier-emotional-regulation"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Verbal participation is a learning outcome of this course.",
+        "response": "I would like to discuss which aspects of verbal participation are core learning outcomes and which are means of demonstrating engagement. There may be ways to meet the underlying outcome through an alternative method."
+      }
+    ],
+    "legalBasis": {
+      "description": "Alternative participation methods are a recognized accommodation where standard participation requirements create a barrier related to a student's disability.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-advance-notice-changes",
+    "formalName": "Advance Notice of Schedule or Format Changes",
+    "plainLanguageDescription": "You receive advance warning when class schedules, formats, locations, or expectations are going to change, so that unexpected transitions do not derail your day.",
+    "whatChangesInPractice": "Your professor notifies you in advance — ideally 48 hours or more — when there will be changes to the usual class format, location, or schedule. Last-minute changes are communicated as early as possible.",
+    "barrierIds": [
+      "barrier-transitions"
+    ],
+    "commonObjections": [
+      {
+        "objection": "Sometimes changes are unavoidable and cannot be communicated in advance.",
+        "response": "I understand that not every change can be anticipated. The accommodation asks for advance notice when it is possible, and prompt communication when it is not. Even a same-day message makes a significant difference."
+      }
+    ],
+    "legalBasis": {
+      "description": "Advance notice of changes is a reasonable accommodation for students whose disability involves difficulty with unexpected transitions.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, ADA Title II"
+    }
+  },
+  {
+    "id": "acc-self-disclosure-pathway",
+    "formalName": "Self-Disclosure Accommodation Pathway",
+    "plainLanguageDescription": "If you do not have formal documentation, you may be able to access provisional support through a self-disclosure process while working toward obtaining documentation.",
+    "whatChangesInPractice": "You meet with a disability services coordinator to describe your functional barriers in your own words. Provisional accommodations may be put in place while formal documentation is pursued. The coordinator can also connect you with low-cost or free evaluation resources.",
+    "barrierIds": [
+      "barrier-documentation-gaps"
+    ],
+    "commonObjections": [
+      {
+        "objection": "We require formal documentation before providing any accommodations.",
+        "response": "I understand documentation is typically required. I would like to discuss whether provisional support is available while I work on obtaining documentation, and whether the office can help connect me with evaluation resources."
+      }
+    ],
+    "legalBasis": {
+      "description": "While documentation is standard, institutions have flexibility in how they gather information about a student's disability. Self-disclosure can be considered when documentation is unavailable.",
+      "reference": "Section 504 of the Rehabilitation Act of 1973, AHEAD Best Practice Guidelines"
+    }
+  }
+]

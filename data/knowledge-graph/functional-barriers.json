@@ -1,0 +1,182 @@
+[
+  {
+    "id": "barrier-task-initiation",
+    "plainLanguageDescription": "I know exactly what I need to do but I cannot make myself start, no matter how much I want to or how important it is.",
+    "academicLabel": "Executive function difficulty: task initiation impairment",
+    "manifestations": [
+      "Opening an assignment and immediately closing it without writing anything",
+      "Spending hours preparing to work without beginning the actual task",
+      "Only being able to start when a deadline is extremely close",
+      "Feeling paralyzed when facing a blank page or empty document"
+    ],
+    "accommodationIds": ["acc-extended-deadlines", "acc-task-chunking"]
+  },
+  {
+    "id": "barrier-time-blindness",
+    "plainLanguageDescription": "I genuinely cannot feel time passing. Deadlines sneak up on me even when I know about them weeks in advance.",
+    "academicLabel": "Executive function difficulty: temporal processing and time perception impairment",
+    "manifestations": [
+      "Losing track of how long something has taken",
+      "Being shocked when a deadline arrives even though it was on the calendar",
+      "Consistently underestimating how long tasks will take",
+      "Missing appointments despite setting reminders"
+    ],
+    "accommodationIds": ["acc-extended-deadlines", "acc-deadline-reminders"]
+  },
+  {
+    "id": "barrier-working-memory",
+    "plainLanguageDescription": "I forget what I was doing mid-task. I lose instructions the moment I try to act on them. I cannot hold multiple pieces of information in my head at once.",
+    "academicLabel": "Working memory deficit affecting academic task completion",
+    "manifestations": [
+      "Forgetting verbal instructions before finishing writing them down",
+      "Losing track of where I am in a multi-step task",
+      "Rereading the same paragraph repeatedly because it does not stay in my mind",
+      "Forgetting what I was about to say mid-sentence during presentations"
+    ],
+    "accommodationIds": ["acc-written-instructions", "acc-note-taker", "acc-recording-lectures"]
+  },
+  {
+    "id": "barrier-auditory-processing",
+    "plainLanguageDescription": "I can hear words but my brain struggles to process them fast enough, especially when there is background noise or when someone speaks quickly.",
+    "academicLabel": "Auditory processing difficulty affecting comprehension of verbal instruction",
+    "manifestations": [
+      "Understanding individual words but missing the meaning of full sentences when spoken",
+      "Losing the thread of a lecture when there is background noise",
+      "Needing instructions repeated multiple times before they make sense",
+      "Struggling in discussions where multiple people speak quickly"
+    ],
+    "accommodationIds": ["acc-written-instructions", "acc-recording-lectures", "acc-preferential-seating"]
+  },
+  {
+    "id": "barrier-reading-decoding",
+    "plainLanguageDescription": "Reading takes me much longer than it seems to take other people. By the time I finish a paragraph I have often lost the meaning of the beginning.",
+    "academicLabel": "Reading fluency and decoding difficulty consistent with dyslexia profile",
+    "manifestations": [
+      "Reading the same sentence multiple times before understanding it",
+      "Losing place frequently when reading dense text",
+      "Taking significantly longer than peers to complete assigned readings",
+      "Words appearing to move or blur on the page when tired"
+    ],
+    "accommodationIds": ["acc-extended-exam-time", "acc-alternative-format-materials", "acc-text-to-speech"]
+  },
+  {
+    "id": "barrier-written-expression",
+    "plainLanguageDescription": "I understand the material clearly in my head but I struggle to get my thoughts organized and onto paper in a way that matches what I actually know.",
+    "academicLabel": "Written expression difficulty: organization and transcription impairment",
+    "manifestations": [
+      "Knowing the answer but being unable to structure it in writing",
+      "Written work that does not reflect actual understanding of the subject",
+      "Spending disproportionate time on written assignments compared to peers",
+      "Ideas feeling clear until the moment I try to write them down"
+    ],
+    "accommodationIds": ["acc-extended-exam-time", "acc-speech-to-text", "acc-extended-deadlines"]
+  },
+  {
+    "id": "barrier-sensory-overwhelm",
+    "plainLanguageDescription": "Certain environments make it almost impossible to concentrate. Noise, lighting, or too much activity around me can completely shut down my ability to think.",
+    "academicLabel": "Sensory processing sensitivity affecting ability to function in standard academic environments",
+    "manifestations": [
+      "Fluorescent lighting causing headaches or difficulty focusing",
+      "Background conversations being impossible to filter out",
+      "Physical discomfort from classroom sensory environment affecting concentration",
+      "Needing to leave environments that become overwhelming without warning"
+    ],
+    "accommodationIds": ["acc-preferential-seating", "acc-reduced-distraction-environment", "acc-flexible-attendance"]
+  },
+  {
+    "id": "barrier-social-communication",
+    "plainLanguageDescription": "I find it difficult to navigate unwritten social rules in academic settings, like knowing when to speak in class, how to approach professors, or what group work expectations really mean.",
+    "academicLabel": "Social communication difficulty affecting participation in standard academic interactions",
+    "manifestations": [
+      "Not knowing when it is appropriate to ask a question in class",
+      "Misunderstanding assignment instructions that rely on implied expectations",
+      "Finding group work difficult due to unclear roles and unspoken norms",
+      "Avoiding office hours due to uncertainty about how those interactions work"
+    ],
+    "accommodationIds": ["acc-written-instructions", "acc-alternative-participation"]
+  },
+  {
+    "id": "barrier-transitions",
+    "plainLanguageDescription": "Switching between tasks, classes, or environments is genuinely hard for me. Unexpected changes to routines can derail my entire day.",
+    "academicLabel": "Cognitive flexibility difficulty: transition and routine change impairment",
+    "manifestations": [
+      "Needing extra time to mentally shift between subjects or tasks",
+      "Schedule changes causing significant distress and loss of productivity",
+      "Difficulty leaving one task to begin another even when time requires it",
+      "Unexpected changes to class format or location causing shutdown"
+    ],
+    "accommodationIds": ["acc-advance-notice-changes", "acc-flexible-attendance"]
+  },
+  {
+    "id": "barrier-organization-planning",
+    "plainLanguageDescription": "Breaking large projects into steps and managing multiple deadlines at once is extremely difficult. Everything feels equally urgent or I cannot figure out where to begin.",
+    "academicLabel": "Executive function difficulty: planning, organization, and prioritization impairment",
+    "manifestations": [
+      "Looking at a large assignment and not knowing which part to do first",
+      "Losing track of multiple deadlines across different courses",
+      "Submitting incomplete work because the planning stage never finished",
+      "Feeling overwhelmed by projects that peers seem to manage easily"
+    ],
+    "accommodationIds": ["acc-extended-deadlines", "acc-task-chunking", "acc-deadline-reminders"]
+  },
+  {
+    "id": "barrier-attention-maintenance",
+    "plainLanguageDescription": "I struggle to keep my attention on something for a sustained period, especially when the task is not immediately engaging, even when I genuinely want to focus.",
+    "academicLabel": "Sustained attention difficulty affecting completion of extended academic tasks",
+    "manifestations": [
+      "Mind wandering during lectures despite genuine interest in the subject",
+      "Losing focus during exams and having to reread questions multiple times",
+      "Inconsistent performance that does not reflect actual knowledge",
+      "Hyperfocusing on interesting tasks while being unable to engage with others"
+    ],
+    "accommodationIds": ["acc-extended-exam-time", "acc-reduced-distraction-environment", "acc-recording-lectures"]
+  },
+  {
+    "id": "barrier-emotional-regulation",
+    "plainLanguageDescription": "Stressful academic situations can cause emotional responses that feel out of proportion and make it hard to continue working or think clearly.",
+    "academicLabel": "Emotional regulation difficulty affecting academic functioning under stress",
+    "manifestations": [
+      "Exam anxiety that causes blanking despite knowing the material",
+      "Criticism or feedback triggering shutdown rather than adjustment",
+      "Difficulty recovering and returning to work after an upsetting event",
+      "Avoidance of assessments due to fear of the emotional response they cause"
+    ],
+    "accommodationIds": ["acc-extended-exam-time", "acc-reduced-distraction-environment", "acc-flexible-attendance"]
+  },
+  {
+    "id": "barrier-processing-speed",
+    "plainLanguageDescription": "I understand the material but I need more time than most people to process information and produce responses. Speed-based assessments do not reflect what I actually know.",
+    "academicLabel": "Processing speed deficit affecting timed academic performance",
+    "manifestations": [
+      "Running out of time on exams despite knowing the answers",
+      "Taking longer than peers to respond in discussions",
+      "Needing to hear or read something multiple times before it fully registers",
+      "Written output that is slower than thinking speed"
+    ],
+    "accommodationIds": ["acc-extended-exam-time", "acc-extended-deadlines"]
+  },
+  {
+    "id": "barrier-verbal-communication",
+    "plainLanguageDescription": "I find it hard to express what I know verbally, especially under pressure. I understand more than I can say out loud in the moment.",
+    "academicLabel": "Verbal expression difficulty affecting oral participation and assessment performance",
+    "manifestations": [
+      "Knowing an answer but being unable to retrieve the words quickly enough",
+      "Performing significantly better on written than oral assessments",
+      "Anxiety about being called on in class affecting participation",
+      "Verbal responses not accurately representing actual knowledge"
+    ],
+    "accommodationIds": ["acc-alternative-participation", "acc-extended-exam-time"]
+  },
+  {
+    "id": "barrier-documentation-gaps",
+    "plainLanguageDescription": "I know I struggle but I have never been formally diagnosed, or my diagnosis is old, or I cannot afford to get updated documentation. I should not have to prove myself to get support.",
+    "academicLabel": "Undocumented or under-documented neurodivergence with clear functional impact",
+    "manifestations": [
+      "Experiencing clear functional barriers without formal diagnosis",
+      "Having a diagnosis but lacking recent documentation required by the institution",
+      "Being unable to afford a formal evaluation",
+      "Coming from a background where neurodivergence was not recognized or assessed"
+    ],
+    "accommodationIds": ["acc-self-disclosure-pathway"]
+  }
+]

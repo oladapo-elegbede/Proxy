@@ -1,0 +1,92 @@
+{
+  "id": "inst-state-university",
+  "name": "State University",
+  "type": "large-public-university",
+  "disabilityServices": {
+    "officeName": "Office of Disability Services",
+    "url": "https://www.stateuniversity.edu/disability",
+    "contactEmail": "disability@stateuniversity.edu",
+    "sourceUrl": "https://www.stateuniversity.edu/disability/contact",
+    "sourceAccessedDate": "2026-06-01"
+  },
+  "processSteps": [
+    {
+      "stepId": "step-understand-rights",
+      "order": 1,
+      "title": "Understand what you are entitled to",
+      "description": "Before contacting anyone, it helps to know that you have a legal right to reasonable accommodations if you have a condition that affects your academic functioning. You do not need a perfect diagnosis. You do not need to have known about this for years. You simply need to describe how your condition affects you.",
+      "nodeType": "UNDERSTAND",
+      "canRunInParallel": false,
+      "sourceUrl": "https://www.stateuniversity.edu/disability/rights"
+    },
+    {
+      "stepId": "step-gather-documentation",
+      "order": 2,
+      "title": "Gather any documentation you have",
+      "description": "Look for any existing documentation — a letter from a doctor, psychologist, or psychiatrist, a previous IEP or 504 plan from school, or any written record of a diagnosis. If you have nothing, that is okay. The next step explains what to do without documentation.",
+      "nodeType": "PREPARE",
+      "canRunInParallel": false,
+      "sourceUrl": "https://www.stateuniversity.edu/disability/documentation"
+    },
+    {
+      "stepId": "step-submit-application",
+      "order": 3,
+      "title": "Submit your accommodation request",
+      "description": "Complete the accommodation request form through the Office of Disability Services portal. You will need your student ID. The form asks you to describe how your condition affects your academic work — answer in your own words. There are no wrong answers.",
+      "nodeType": "ACT",
+      "canRunInParallel": false,
+      "blockedUntilStepId": "step-gather-documentation",
+      "sourceUrl": "https://www.stateuniversity.edu/disability/apply"
+    },
+    {
+      "stepId": "step-intake-meeting",
+      "order": 4,
+      "title": "Meet with a disability services coordinator",
+      "description": "After submitting your application, you will be invited to an intake meeting with a coordinator. This is a conversation — not a test or an evaluation. The coordinator's job is to understand your needs and identify which accommodations fit your situation. You can bring notes. You can ask questions. You can take your time.",
+      "nodeType": "CONVERSATION",
+      "canRunInParallel": false,
+      "blockedUntilStepId": "step-submit-application",
+      "sourceUrl": "https://www.stateuniversity.edu/disability/intake"
+    },
+    {
+      "stepId": "step-receive-letter",
+      "order": 5,
+      "title": "Receive your accommodation letter",
+      "description": "After your intake meeting, the Office of Disability Services will issue an official accommodation letter. This letter lists all approved accommodations. You will use this letter to notify your professors. Keep a copy for yourself.",
+      "nodeType": "UNDERSTAND",
+      "canRunInParallel": false,
+      "blockedUntilStepId": "step-intake-meeting",
+      "sourceUrl": "https://www.stateuniversity.edu/disability/letters"
+    },
+    {
+      "stepId": "step-notify-professors",
+      "order": 6,
+      "title": "Share your accommodation letter with your professors",
+      "description": "You are responsible for delivering your accommodation letter to each professor whose course you want accommodations in. You do not need to disclose your diagnosis — the letter speaks for itself. PROXY will help you prepare exactly what to say when you do this.",
+      "nodeType": "CONVERSATION",
+      "canRunInParallel": false,
+      "blockedUntilStepId": "step-receive-letter",
+      "sourceUrl": "https://www.stateuniversity.edu/disability/notifying-faculty"
+    }
+  ],
+  "documentationRequirements": [
+    {
+      "name": "Clinical documentation",
+      "description": "A letter or report from a licensed psychologist, psychiatrist, or medical doctor describing your diagnosis and how it affects your academic functioning. Should be recent — within the last three to five years where possible.",
+      "required": true,
+      "alternativeIfUnavailable": "Contact the Office of Disability Services directly before your intake meeting. They can discuss self-disclosure options and connect you with low-cost or free evaluation resources on or near campus."
+    },
+    {
+      "name": "Previous IEP or 504 Plan",
+      "description": "If you received special education services in high school, your Individualized Education Program or 504 Plan is useful supporting documentation. Contact your high school's special education department to request a copy.",
+      "required": false,
+      "alternativeIfUnavailable": "This document is helpful but not required. Other documentation or a self-disclosure conversation with a coordinator can substitute."
+    }
+  ],
+  "processingTimelines": {
+    "standardDays": 10,
+    "rushAvailable": true,
+    "rushDays": 3,
+    "sourceUrl": "https://www.stateuniversity.edu/disability/timelines"
+  }
+}
