@@ -1,6 +1,7 @@
 // lib/ai/pipelines/pathway.ts
 
-import Anthropic from "@anthropic-ai/sdk";
+import { createGroq } from "@ai-sdk/groq";
+import { generateText } from "ai";
 import { buildPathwaySystemPrompt, buildPathwayUserPrompt } from "@/lib/ai/prompts/pathway";
 import { getInstitutionById, getAccommodationById } from "@/lib/knowledge";
 import type { PathwayRequest, PathwayResponse, ProxyErrorCode } from "@/lib/types";
@@ -16,16 +17,15 @@ export type PipelineResult<T> =
   | { success: true; data: T }
   | { success: false; error: PipelineError };
 
-function getClient(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set");
-  return new Anthropic({ apiKey });
+function getClient() {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) throw new Error("GROQ_API_KEY is not set");
+  return createGroq({ apiKey });
 }
 
 export async function runPathwayPipeline(
   input: PathwayRequest
 ): Promise<PipelineResult<PathwayResponse>> {
-  // Step 1: Load institution from Knowledge Graph
   const institution = getInstitutionById(input.institutionId as InstitutionId);
 
   if (!institution) {
@@ -35,58 +35,39 @@ export async function runPathwayPipeline(
         code: "INSTITUTION_NOT_FOUND",
         message: `Institution not found: ${input.institutionId}`,
         userMessage:
-          "We don't have specific information about your institution yet. We're working on adding more institutions. In the meantime, the general pathway below will guide you.",
+          "We don't have specific information about your institution yet. We're working on adding more institutions.",
       },
     };
   }
 
-  // Step 2: Load accommodations from Knowledge Graph
   const accommodations = input.matchedAccommodationIds
     .map((id) => getAccommodationById(id as AccommodationId))
     .filter((acc) => acc !== undefined);
 
-  // Step 3: Build prompts
   const systemPrompt = buildPathwaySystemPrompt(institution, accommodations);
   const userPrompt = buildPathwayUserPrompt(
     input.matchedBarrierIds.join(", "),
     input.matchedAccommodationIds
   );
 
-  // Step 4: Call AI
   try {
-    const client = getClient();
+    const groq = getClient();
 
-    const response = await client.messages.create({
-      model: "claude-3-5-sonnet-20241022",
-      max_tokens: 2048,
-      messages: [{ role: "user", content: userPrompt }],
+    const { text } = await generateText({
+      model: groq("llama-3.3-70b-versatile"),
       system: systemPrompt,
+      prompt: userPrompt,
     });
 
-    const rawText =
-      response.content[0]?.type === "text" ? response.content[0].text : null;
-
-    if (!rawText) {
-      return {
-        success: false,
-        error: {
-          code: "PIPELINE_FAILURE",
-          message: "Empty response from AI",
-          userMessage: "Something went wrong generating your pathway. Please try again.",
-        },
-      };
-    }
-
-    // Step 5: Parse JSON
     let pathway: PathwayResponse["pathway"];
     try {
-      pathway = JSON.parse(rawText) as PathwayResponse["pathway"];
+      pathway = JSON.parse(text) as PathwayResponse["pathway"];
     } catch {
       return {
         success: false,
         error: {
           code: "PIPELINE_FAILURE",
-          message: `JSON parse failed: ${rawText}`,
+          message: `JSON parse failed: ${text}`,
           userMessage: "Something went wrong generating your pathway. Please try again.",
         },
       };
