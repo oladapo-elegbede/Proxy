@@ -1,7 +1,6 @@
 // lib/types/api.ts
 
-// Generic success and error wrappers for every API response.
-// This ensures every endpoint returns a consistent shape.
+import type { Pathway } from "./pathway";
 
 export interface ApiSuccess<T> {
   success: true;
@@ -11,11 +10,8 @@ export interface ApiSuccess<T> {
 export interface ApiError {
   success: false;
   error: {
-    // Machine-readable code for logging
     code: ProxyErrorCode;
-    // Technical detail for server logs — never shown to student
     message: string;
-    // Student-facing message — always written in product language
     userMessage: string;
   };
 }
@@ -32,8 +28,6 @@ export type ProxyErrorCode =
   | "CRISIS_DETECTED"
   | "UNKNOWN";
 
-// --- Intake endpoint ---
-
 export interface IntakeRequest {
   description: string;
   institutionId: string;
@@ -47,8 +41,6 @@ export interface IntakeResponse {
   confidenceScore: number;
 }
 
-// --- Pathway endpoint ---
-
 export interface PathwayRequest {
   matchedBarrierIds: string[];
   matchedAccommodationIds: string[];
@@ -57,5 +49,5 @@ export interface PathwayRequest {
 }
 
 export interface PathwayResponse {
-  pathway: import("./pathway").Pathway;
+  pathway: Pathway;
 }

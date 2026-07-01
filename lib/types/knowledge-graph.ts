@@ -1,7 +1,7 @@
 // lib/types/knowledge-graph.ts
 
-// Branded types prevent accidentally passing the wrong ID type.
-// A plain string cannot be used where a FunctionalBarrierId is expected.
+import type { PathwayNodeType } from "./pathway";
+
 export type FunctionalBarrierId = string & { readonly __brand: "FunctionalBarrierId" };
 export type AccommodationId = string & { readonly __brand: "AccommodationId" };
 export type InstitutionId = string & { readonly __brand: "InstitutionId" };
@@ -34,8 +34,6 @@ export interface AccommodationNode {
   commonObjections: InstitutionObjection[];
   legalBasis: LegalBasis;
 }
-
-export type PathwayNodeType = "UNDERSTAND" | "PREPARE" | "ACT" | "CONVERSATION";
 
 export interface InstitutionProcessStep {
   stepId: ProcessStepId;
