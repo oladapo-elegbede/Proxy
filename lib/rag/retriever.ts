@@ -47,8 +47,7 @@ async function generateEmbedding(text: string): Promise<number[]> {
 }
 
 export async function retrievePolicyChunks(
-  query: string,
-  _context: RightsQueryContext
+  query: string
 ): Promise<PolicyChunk[]> {
   const indexName = process.env.PINECONE_INDEX_NAME ?? "proxy-policy-corpus";
 
