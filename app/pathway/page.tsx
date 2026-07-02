@@ -44,31 +44,36 @@ export default function PathwayPage() {
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Header */}
-      <div className="border-b border-neutral-200 bg-white px-6 py-5">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-heading font-semibold text-neutral-800">
+      <div className="border-b border-neutral-200 bg-white px-4 sm:px-6 py-4">
+        <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-large sm:text-heading font-semibold text-neutral-800 truncate">
               Your Pathway
             </h1>
-            <p className="text-sm text-neutral-400 mt-0.5">
-              {session.intakeSession.barrierSummary.slice(0, 60)}...
+            <p className="text-xs sm:text-sm text-neutral-400 mt-0.5 truncate">
+              {session.intakeSession.barrierSummary.slice(0, 50)}...
             </p>
           </div>
-          <div className="text-right" aria-live="polite" aria-atomic="true">
+          {/* Smaller counter on mobile */}
+          <div
+            className="text-right flex-shrink-0"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <p
-              className="text-display font-bold text-primary-500"
+              className="text-large sm:text-display font-bold text-primary-500"
               aria-label={`${completedCount} of ${totalNodes} steps completed`}
             >
               {completedCount}/{totalNodes}
             </p>
-            <p className="text-sm text-neutral-400" aria-hidden="true">
+            <p className="text-xs text-neutral-400" aria-hidden="true">
               steps done
             </p>
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="max-w-2xl mx-auto mt-4">
+        <div className="max-w-2xl mx-auto mt-3">
           <div
             role="progressbar"
             aria-valuenow={progressPercent}
@@ -87,9 +92,9 @@ export default function PathwayPage() {
 
       {/* All done banner */}
       {allDone && (
-        <div className="max-w-2xl mx-auto px-6 pt-8" role="status">
-          <div className="rounded-card bg-primary-500 p-6 text-white text-center">
-            <p className="text-display font-bold mb-2">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6" role="status">
+          <div className="rounded-card bg-primary-500 p-5 sm:p-6 text-white text-center">
+            <p className="text-large sm:text-display font-bold mb-2">
               <span aria-hidden="true">🎉 </span>
               Pathway Complete
             </p>
@@ -102,7 +107,7 @@ export default function PathwayPage() {
       )}
 
       {/* Accommodations */}
-      <div className="pt-8">
+      <div className="pt-6 sm:pt-8">
         <AccommodationsPanel
           barrierIds={session.intakeSession.matchedBarrierIds}
         />
@@ -110,7 +115,7 @@ export default function PathwayPage() {
 
       {/* Steps */}
       <ol
-        className="max-w-2xl mx-auto px-6 py-4 space-y-3 list-none"
+        className="max-w-2xl mx-auto px-4 sm:px-6 py-4 space-y-3 list-none"
         aria-label="Your pathway steps"
       >
         {pathway.nodes.map((node, index) => {
@@ -122,7 +127,7 @@ export default function PathwayPage() {
             <li
               key={node.id}
               aria-current={isActive ? "step" : undefined}
-              className={`rounded-card border p-5 transition-all duration-medium ${
+              className={`rounded-card border p-4 sm:p-5 transition-all duration-medium ${
                 isActive
                   ? "border-primary-500 bg-white shadow-sm"
                   : isCompleted
@@ -130,10 +135,10 @@ export default function PathwayPage() {
                   : "border-neutral-100 bg-white opacity-50"
               }`}
             >
-              <div className="flex items-start gap-4">
-                {/* Step number / check */}
+              <div className="flex items-start gap-3 sm:gap-4">
+                {/* Step number */}
                 <div
-                  className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                  className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${
                     isCompleted
                       ? "bg-primary-500 text-white"
                       : isActive
@@ -192,7 +197,7 @@ export default function PathwayPage() {
                       <button
                         onClick={() => completeNode(node.id)}
                         aria-label={`Complete step ${index + 1}: ${node.title}`}
-                        className="rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                        className="w-full sm:w-auto rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                       >
                         {node.actionLabel} →
                       </button>
@@ -205,14 +210,11 @@ export default function PathwayPage() {
         })}
       </ol>
 
-      {/* Bottom bar */}
+      {/* Fixed bottom bar — stacks on mobile, side by side on sm+ */}
       {activeNode && !allDone && (
-        <div
-          className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-6 py-4"
-          aria-label="Current step actions"
-        >
-          <div className="max-w-2xl mx-auto flex items-center justify-between">
-            <div>
+        <div className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-4 sm:px-6 py-3 pb-safe">
+          <div className="max-w-2xl mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
               <p
                 className="text-xs text-neutral-400 uppercase tracking-wide font-medium"
                 aria-hidden="true"
@@ -220,7 +222,7 @@ export default function PathwayPage() {
                 Current step
               </p>
               <p
-                className="text-body font-semibold text-neutral-800"
+                className="text-sm font-semibold text-neutral-800 truncate"
                 aria-hidden="true"
               >
                 {activeNode.title}
@@ -229,7 +231,7 @@ export default function PathwayPage() {
             <button
               onClick={() => completeNode(activeNode.id)}
               aria-label={`Complete current step: ${activeNode.title}`}
-              className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              className="w-full sm:w-auto flex-shrink-0 rounded-soft bg-primary-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {activeNode.actionLabel} →
             </button>
@@ -237,7 +239,8 @@ export default function PathwayPage() {
         </div>
       )}
 
-      <div className="h-24" />
+      {/* Spacer — taller on mobile where bottom bar stacks */}
+      <div className="h-32 sm:h-24" />
     </div>
   );
 }
