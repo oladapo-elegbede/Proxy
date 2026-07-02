@@ -1,9 +1,9 @@
 // lib/utils/accommodations.ts
-// Client-safe accommodation lookup using static import.
 
 import accommodationsData from "@/data/knowledge-graph/accommodations.json";
+import barriersData from "@/data/knowledge-graph/functional-barriers.json";
 
-interface AccommodationSummary {
+export interface AccommodationSummary {
   id: string;
   formalName: string;
   plainLanguageDescription: string;
@@ -15,8 +15,29 @@ for (const acc of accommodationsData as AccommodationSummary[]) {
   accommodationMap.set(acc.id, acc);
 }
 
-export function getAccommodationSummaries(ids: string[]): AccommodationSummary[] {
-  return ids
-    .map((id) => accommodationMap.get(id))
-    .filter((acc): acc is AccommodationSummary => acc !== undefined);
+const barrierAccommodationMap = new Map<string, string[]>();
+for (const barrier of barriersData as { id: string; accommodationIds: string[] }[]) {
+  barrierAccommodationMap.set(barrier.id, barrier.accommodationIds);
+}
+
+export function getAccommodationsFromBarriers(
+  barrierIds: string[]
+): AccommodationSummary[] {
+  const accIds = new Set<string>();
+
+  for (const barrierId of barrierIds) {
+    const ids = barrierAccommodationMap.get(barrierId) ?? [];
+    for (const id of ids) {
+      accIds.add(id);
+    }
+  }
+
+  const result: AccommodationSummary[] = [];
+  for (const id of accIds) {
+    const acc = accommodationMap.get(id);
+    if (acc !== undefined) {
+      result.push(acc);
+    }
+  }
+  return result;
 }

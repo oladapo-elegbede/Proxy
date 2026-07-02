@@ -87,7 +87,7 @@ export default function PathwayPage() {
       {/* Accommodations */}
       <div className="pt-8">
         <AccommodationsPanel
-          accommodationIds={session.intakeSession.matchedAccommodationIds}
+          barrierIds={session.intakeSession.matchedBarrierIds}
         />
       </div>
 
