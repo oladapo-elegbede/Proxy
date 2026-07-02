@@ -22,6 +22,7 @@ const NODE_TYPE_ICONS = {
 export default function PathwayPage() {
   const router = useRouter();
   const session = useSessionStore((s) => s.session);
+  const completeNode = useSessionStore((s) => s.completeNode);
 
   useEffect(() => {
     if (!session) router.push("/intake");
@@ -35,6 +36,7 @@ export default function PathwayPage() {
   ).length;
   const activeNode = pathway.nodes.find((n) => n.status === "ACTIVE");
   const totalNodes = pathway.nodes.length;
+  const allDone = completedCount === totalNodes;
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -67,6 +69,19 @@ export default function PathwayPage() {
           </div>
         </div>
       </div>
+
+      {/* All done banner */}
+      {allDone && (
+        <div className="max-w-2xl mx-auto px-6 pt-8">
+          <div className="rounded-card bg-primary-500 p-6 text-white text-center">
+            <p className="text-display font-bold mb-2">🎉 Pathway Complete</p>
+            <p className="text-body opacity-90">
+              You have navigated every step. Your accommodation process is
+              underway.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Steps */}
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-3">
@@ -132,7 +147,10 @@ export default function PathwayPage() {
 
                   {isActive && (
                     <div className="mt-4">
-                      <button className="rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                      <button
+                        onClick={() => completeNode(node.id)}
+                        className="rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                      >
                         {node.actionLabel} →
                       </button>
                     </div>
@@ -145,7 +163,7 @@ export default function PathwayPage() {
       </div>
 
       {/* Bottom bar */}
-      {activeNode && (
+      {activeNode && !allDone && (
         <div className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-6 py-4">
           <div className="max-w-2xl mx-auto flex items-center justify-between">
             <div>
@@ -156,14 +174,16 @@ export default function PathwayPage() {
                 {activeNode.title}
               </p>
             </div>
-            <button className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+            <button
+              onClick={() => completeNode(activeNode.id)}
+              className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            >
               {activeNode.actionLabel} →
             </button>
           </div>
         </div>
       )}
 
-      {/* Spacer for fixed bottom bar */}
       <div className="h-24" />
     </div>
   );
