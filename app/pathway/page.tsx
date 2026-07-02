@@ -5,6 +5,7 @@ import { useSessionStore } from "@/lib/state";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AccommodationsPanel } from "@/components/pathway/AccommodationsPanel";
+import { ConversationPrep } from "@/components/pathway/ConversationPrep";
 
 const NODE_TYPE_STYLES = {
   UNDERSTAND: "bg-blue-50 text-blue-700 border-blue-200",
@@ -153,7 +154,14 @@ export default function PathwayPage() {
                   )}
 
                   {isActive && (
-                    <div className="mt-4">
+                    <div className="mt-4 space-y-3">
+                      {node.type === "CONVERSATION" && (
+                        <ConversationPrep
+                          stepTitle={node.title}
+                          stepDescription={node.description}
+                          barrierSummary={session.intakeSession.barrierSummary}
+                        />
+                      )}
                       <button
                         onClick={() => completeNode(node.id)}
                         className="rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
