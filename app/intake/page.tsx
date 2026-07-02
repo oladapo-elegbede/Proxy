@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 
 export default function IntakePage() {
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-neutral-50 flex items-start sm:items-center justify-center p-4 sm:p-6 pt-8 sm:pt-6">
       <div className="w-full max-w-2xl">
-        <div className="mb-10">
-          <h1 className="text-display font-semibold text-neutral-800 mb-2">
+        <div className="mb-8 sm:mb-10">
+          <h1 className="text-heading sm:text-display font-semibold text-neutral-800 mb-2">
             PROXY
           </h1>
-          <p className="text-body text-neutral-400">
+          <p className="text-sm sm:text-body text-neutral-400">
             Institutional navigation for neurodivergent learners.
           </p>
         </div>
