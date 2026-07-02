@@ -4,15 +4,15 @@ import Link from "next/link";
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
-      <main className="flex-1 flex items-center justify-center px-6 py-20">
-        <div className="max-w-2xl w-full space-y-10">
+      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-20">
+        <div className="max-w-2xl w-full space-y-8 sm:space-y-10">
 
           {/* Brand */}
           <div>
-            <h1 className="text-display font-bold text-neutral-800 mb-3">
+            <h1 className="text-heading sm:text-display font-bold text-neutral-800 mb-3">
               PROXY
             </h1>
-            <p className="text-large text-neutral-600 leading-relaxed">
+            <p className="text-body sm:text-large text-neutral-600 leading-relaxed">
               The system designed to help neurodivergent students access
               academic support — without needing to understand institutional
               bureaucracy.
@@ -21,7 +21,7 @@ export default function LandingPage() {
 
           {/* The problem */}
           <section aria-labelledby="problem-heading">
-            <div className="rounded-card bg-white border border-neutral-200 p-6 space-y-3">
+            <div className="rounded-card bg-white border border-neutral-200 p-4 sm:p-6 space-y-3">
               <h2
                 id="problem-heading"
                 className="text-sm font-medium text-neutral-400 uppercase tracking-wide"
@@ -71,15 +71,15 @@ export default function LandingPage() {
               ].map((item) => (
                 <li
                   key={item.step}
-                  className="flex gap-4 rounded-card bg-white border border-neutral-200 p-5"
+                  className="flex gap-3 sm:gap-4 rounded-card bg-white border border-neutral-200 p-4 sm:p-5"
                 >
                   <div
-                    className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-bold"
+                    className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-xs sm:text-sm font-bold"
                     aria-hidden="true"
                   >
                     {item.step}
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h3 className="text-body font-semibold text-neutral-800 mb-1">
                       {item.title}
                     </h3>
@@ -96,7 +96,7 @@ export default function LandingPage() {
           <div className="space-y-3">
             <Link
               href="/intake"
-              className="block w-full rounded-card bg-primary-500 px-8 py-4 text-center text-large font-semibold text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              className="block w-full rounded-card bg-primary-500 px-6 sm:px-8 py-4 text-center text-body sm:text-large font-semibold text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               Find your support pathway
               <span aria-hidden="true"> →</span>
@@ -110,10 +110,10 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-neutral-200 px-6 py-4">
+      <footer className="border-t border-neutral-200 px-4 sm:px-6 py-4">
         <div className="max-w-2xl mx-auto">
           <p className="text-sm text-neutral-400 text-center">
-            PROXY Institutional Navigation for Neurodivergent Learners
+            PROXY — Institutional Navigation for Neurodivergent Learners
           </p>
         </div>
       </footer>
