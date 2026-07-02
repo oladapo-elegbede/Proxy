@@ -4,6 +4,7 @@
 import { useSessionStore } from "@/lib/state";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { AccommodationsPanel } from "@/components/pathway/AccommodationsPanel";
 
 const NODE_TYPE_STYLES = {
   UNDERSTAND: "bg-blue-50 text-blue-700 border-blue-200",
@@ -83,8 +84,15 @@ export default function PathwayPage() {
         </div>
       )}
 
+      {/* Accommodations */}
+      <div className="pt-8">
+        <AccommodationsPanel
+          accommodationIds={session.intakeSession.matchedAccommodationIds}
+        />
+      </div>
+
       {/* Steps */}
-      <div className="max-w-2xl mx-auto px-6 py-8 space-y-3">
+      <div className="max-w-2xl mx-auto px-6 py-4 space-y-3">
         {pathway.nodes.map((node, index) => {
           const isActive = node.status === "ACTIVE";
           const isCompleted = node.status === "COMPLETED";
@@ -102,7 +110,6 @@ export default function PathwayPage() {
               }`}
             >
               <div className="flex items-start gap-4">
-                {/* Step number / check */}
                 <div
                   className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                     isCompleted
