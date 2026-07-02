@@ -39,6 +39,7 @@ export default function PathwayPage() {
   const activeNode = pathway.nodes.find((n) => n.status === "ACTIVE");
   const totalNodes = pathway.nodes.length;
   const allDone = completedCount === totalNodes;
+  const progressPercent = Math.round((completedCount / totalNodes) * 100);
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -53,20 +54,32 @@ export default function PathwayPage() {
               {session.intakeSession.barrierSummary.slice(0, 60)}...
             </p>
           </div>
-          <div className="text-right">
-            <p className="text-display font-bold text-primary-500">
+          <div className="text-right" aria-live="polite" aria-atomic="true">
+            <p
+              className="text-display font-bold text-primary-500"
+              aria-label={`${completedCount} of ${totalNodes} steps completed`}
+            >
               {completedCount}/{totalNodes}
             </p>
-            <p className="text-sm text-neutral-400">steps done</p>
+            <p className="text-sm text-neutral-400" aria-hidden="true">
+              steps done
+            </p>
           </div>
         </div>
 
         {/* Progress bar */}
         <div className="max-w-2xl mx-auto mt-4">
-          <div className="h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+          <div
+            role="progressbar"
+            aria-valuenow={progressPercent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Pathway progress: ${progressPercent}% complete`}
+            className="h-1.5 bg-neutral-100 rounded-full overflow-hidden"
+          >
             <div
               className="h-full bg-primary-500 rounded-full transition-all duration-slow"
-              style={{ width: `${(completedCount / totalNodes) * 100}%` }}
+              style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
@@ -74,9 +87,12 @@ export default function PathwayPage() {
 
       {/* All done banner */}
       {allDone && (
-        <div className="max-w-2xl mx-auto px-6 pt-8">
+        <div className="max-w-2xl mx-auto px-6 pt-8" role="status">
           <div className="rounded-card bg-primary-500 p-6 text-white text-center">
-            <p className="text-display font-bold mb-2">🎉 Pathway Complete</p>
+            <p className="text-display font-bold mb-2">
+              <span aria-hidden="true">🎉 </span>
+              Pathway Complete
+            </p>
             <p className="text-body opacity-90">
               You have navigated every step. Your accommodation process is
               underway.
@@ -93,15 +109,19 @@ export default function PathwayPage() {
       </div>
 
       {/* Steps */}
-      <div className="max-w-2xl mx-auto px-6 py-4 space-y-3">
+      <ol
+        className="max-w-2xl mx-auto px-6 py-4 space-y-3 list-none"
+        aria-label="Your pathway steps"
+      >
         {pathway.nodes.map((node, index) => {
           const isActive = node.status === "ACTIVE";
           const isCompleted = node.status === "COMPLETED";
           const isFuture = node.status === "FUTURE";
 
           return (
-            <div
+            <li
               key={node.id}
+              aria-current={isActive ? "step" : undefined}
               className={`rounded-card border p-5 transition-all duration-medium ${
                 isActive
                   ? "border-primary-500 bg-white shadow-sm"
@@ -111,6 +131,7 @@ export default function PathwayPage() {
               }`}
             >
               <div className="flex items-start gap-4">
+                {/* Step number / check */}
                 <div
                   className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                     isCompleted
@@ -119,6 +140,7 @@ export default function PathwayPage() {
                       ? "bg-primary-50 text-primary-600 border-2 border-primary-500"
                       : "bg-neutral-100 text-neutral-400"
                   }`}
+                  aria-hidden="true"
                 >
                   {isCompleted ? "✓" : index + 1}
                 </div>
@@ -129,14 +151,11 @@ export default function PathwayPage() {
                       className={`text-xs px-2 py-0.5 rounded-full border font-medium ${
                         NODE_TYPE_STYLES[node.type]
                       }`}
+                      aria-hidden="true"
                     >
-                      {NODE_TYPE_ICONS[node.type]} {node.type}
+                      <span aria-hidden="true">{NODE_TYPE_ICONS[node.type]} </span>
+                      {node.type}
                     </span>
-                    {isActive && (
-                      <span className="text-xs text-primary-500 font-medium">
-                        You are here
-                      </span>
-                    )}
                   </div>
 
                   <h2
@@ -145,6 +164,12 @@ export default function PathwayPage() {
                     }`}
                   >
                     {node.title}
+                    {isCompleted && (
+                      <span className="sr-only"> — completed</span>
+                    )}
+                    {isActive && (
+                      <span className="sr-only"> — current step</span>
+                    )}
                   </h2>
 
                   {(isActive || isCompleted) && (
@@ -159,11 +184,14 @@ export default function PathwayPage() {
                         <ConversationPrep
                           stepTitle={node.title}
                           stepDescription={node.description}
-                          barrierSummary={session.intakeSession.barrierSummary}
+                          barrierSummary={
+                            session.intakeSession.barrierSummary
+                          }
                         />
                       )}
                       <button
                         onClick={() => completeNode(node.id)}
+                        aria-label={`Complete step ${index + 1}: ${node.title}`}
                         className="rounded-soft bg-primary-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                       >
                         {node.actionLabel} →
@@ -172,25 +200,35 @@ export default function PathwayPage() {
                   )}
                 </div>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ol>
 
       {/* Bottom bar */}
       {activeNode && !allDone && (
-        <div className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-6 py-4">
+        <div
+          className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-6 py-4"
+          aria-label="Current step actions"
+        >
           <div className="max-w-2xl mx-auto flex items-center justify-between">
             <div>
-              <p className="text-xs text-neutral-400 uppercase tracking-wide font-medium">
+              <p
+                className="text-xs text-neutral-400 uppercase tracking-wide font-medium"
+                aria-hidden="true"
+              >
                 Current step
               </p>
-              <p className="text-body font-semibold text-neutral-800">
+              <p
+                className="text-body font-semibold text-neutral-800"
+                aria-hidden="true"
+              >
                 {activeNode.title}
               </p>
             </div>
             <button
               onClick={() => completeNode(activeNode.id)}
+              aria-label={`Complete current step: ${activeNode.title}`}
               className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {activeNode.actionLabel} →
