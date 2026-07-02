@@ -21,8 +21,15 @@ export function IntakeResponse({
   const displayText = isStreaming ? partialContent : barrierSummary;
 
   return (
-    <div className="space-y-6" role="region" aria-label="PROXY response">
-      <div className="rounded-card bg-white border border-neutral-200 p-6 space-y-4">
+    <div className="space-y-6">
+      {/* Streaming response region — aria-live announces updates to screen readers */}
+      <div
+        role="region"
+        aria-label="PROXY response"
+        aria-live="polite"
+        aria-atomic="false"
+        className="rounded-card bg-white border border-neutral-200 p-6 space-y-4"
+      >
         <p className="text-sm font-medium text-primary-600 uppercase tracking-wide">
           {INTAKE_COPY.streamingLabel}
         </p>
@@ -35,22 +42,40 @@ export function IntakeResponse({
             />
           )}
         </p>
+
+        {/* Screen reader only — announces when streaming is complete */}
+        {!isStreaming && barrierSummary && (
+          <p className="sr-only" role="status">
+            PROXY has finished understanding your situation. Please confirm
+            whether this is correct.
+          </p>
+        )}
       </div>
 
+      {/* Confirmation buttons */}
       {!isStreaming && barrierSummary && (
-        <div className="space-y-3">
-          <p className="text-body text-neutral-600">
+        <div
+          role="group"
+          aria-labelledby="confirm-prompt"
+          className="space-y-3"
+        >
+          <p
+            id="confirm-prompt"
+            className="text-body text-neutral-600"
+          >
             {INTAKE_COPY.confirmPrompt}
           </p>
           <div className="flex gap-3">
             <button
               onClick={onConfirm}
+              aria-describedby="confirm-prompt"
               className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {INTAKE_COPY.confirmYes}
             </button>
             <button
               onClick={onDeny}
+              aria-describedby="confirm-prompt"
               className="rounded-soft border border-neutral-200 px-6 py-3 text-body font-medium text-neutral-600 hover:bg-neutral-100 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
             >
               {INTAKE_COPY.confirmNo}
