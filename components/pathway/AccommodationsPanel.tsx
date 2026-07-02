@@ -14,29 +14,43 @@ export function AccommodationsPanel({ barrierIds }: AccommodationsPanelProps) {
   if (accommodations.length === 0) return null;
 
   return (
-    <div className="max-w-2xl mx-auto px-6 pb-6">
+    <section
+      aria-labelledby="accommodations-heading"
+      className="max-w-2xl mx-auto px-6 pb-6"
+    >
       <div className="rounded-card border border-primary-100 bg-primary-50 overflow-hidden">
         <div className="px-5 py-4 border-b border-primary-100">
-          <p className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+          <p
+            className="text-sm font-medium text-primary-600 uppercase tracking-wide"
+            aria-hidden="true"
+          >
             You are entitled to
           </p>
-          <p className="text-body font-semibold text-neutral-800 mt-0.5">
-            {accommodations.length} academic adjustment{accommodations.length !== 1 ? "s" : ""}
-          </p>
+          <h2
+            id="accommodations-heading"
+            className="text-body font-semibold text-neutral-800 mt-0.5"
+          >
+            {accommodations.length} academic adjustment
+            {accommodations.length !== 1 ? "s" : ""}
+          </h2>
         </div>
-        <div className="divide-y divide-primary-100">
+
+        <ul
+          className="divide-y divide-primary-100 list-none"
+          aria-label="Your academic adjustments"
+        >
           {accommodations.map((acc: AccommodationSummary) => (
-            <div key={acc.id} className="px-5 py-4">
-              <p className="text-body font-semibold text-neutral-800 mb-1">
+            <li key={acc.id} className="px-5 py-4">
+              <h3 className="text-body font-semibold text-neutral-800 mb-1">
                 {acc.plainLanguageDescription}
-              </p>
+              </h3>
               <p className="text-sm text-neutral-500 leading-relaxed">
                 {acc.whatChangesInPractice}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }
