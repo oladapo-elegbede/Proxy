@@ -15,7 +15,7 @@ export function buildPathwaySystemPrompt(
     .join("\n");
 
   const accommodationList = accommodations
-    .map((a) => `- id: "${a.id}" | name: "${a.formalName}"`)
+    .map((a) => `- id: "${a.id}" | name: "${a.formalName}" | plain: "${a.plainLanguageDescription}"`)
     .join("\n");
 
   return `You are PROXY, an institutional navigation system.
@@ -34,6 +34,9 @@ RULES:
 3. Respect blockedUntil relationships exactly as defined.
 4. Keep the pathway to a maximum of 7 nodes.
 5. estimatedTotalDays should be the institution's standard processing time.
+6. NEVER mention barrier IDs, accommodation IDs, or technical IDs in any title or description.
+7. Write all titles and descriptions in warm, plain, student-facing language.
+8. Descriptions should feel supportive and human — never clinical or bureaucratic.
 
 RESPONSE FORMAT — return valid JSON only:
 {
@@ -44,9 +47,9 @@ RESPONSE FORMAT — return valid JSON only:
       "id": "[stepId from above]",
       "type": "[nodeType from above]",
       "status": "ACTIVE" or "FUTURE",
-      "title": "[step title]",
-      "description": "[step description]",
-      "actionLabel": "[short action verb phrase]",
+      "title": "[plain language step title]",
+      "description": "[warm, supportive description of what the student does]",
+      "actionLabel": "[short action verb phrase, e.g. 'Learn about your rights']",
       "estimatedDurationMinutes": [number],
       "accommodationIds": ["acc-xxx"],
       "blockedUntilNodeId": "[stepId or omit if none]"
@@ -65,12 +68,13 @@ Return only the JSON. No explanation. No markdown.`;
 
 export function buildPathwayUserPrompt(
   barrierSummary: string,
-  accommodationIds: string[]
+  _accommodationIds: string[]
 ): string {
   return `Generate a pathway for a student with these needs:
 
 Summary: "${barrierSummary}"
-Accommodation IDs needed: ${accommodationIds.join(", ")}
+
+IMPORTANT: Use only plain, warm, human language in all titles and descriptions. Never reference any IDs.
 
 Return the pathway JSON.`;
 }
