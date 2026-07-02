@@ -1,7 +1,7 @@
 // components/intake/IntakeContainer.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { IntakePrompt } from "./IntakePrompt";
 import { IntakeInput } from "./IntakeInput";
@@ -10,7 +10,14 @@ import { useSessionStore } from "@/lib/state";
 import { INSTITUTION_OPTIONS } from "@/lib/constants/copy";
 import type { IntakeResponse as IntakeResponseType, Pathway } from "@/lib/types";
 
-type Phase = "input" | "streaming" | "confirming" | "loading";
+type Phase =
+  | "input"
+  | "streaming"
+  | "confirming"
+  | "loading-pathway"
+  | "pathway-error";
+
+const INTAKE_TIMEOUT_MS = 30_000;
 
 export function IntakeContainer() {
   const router = useRouter();
@@ -20,7 +27,9 @@ export function IntakeContainer() {
   const [partialContent, setPartialContent] = useState("");
   const [intakeResult, setIntakeResult] = useState<IntakeResponseType | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [pathwayError, setPathwayError] = useState<string | null>(null);
 
+  const abortRef = useRef<AbortController | null>(null);
   const institutionId = INSTITUTION_OPTIONS[0].id;
 
   async function handleSubmit(description: string) {
@@ -28,12 +37,23 @@ export function IntakeContainer() {
     setPartialContent("");
     setError(null);
 
+    // Create abort controller for timeout
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, INTAKE_TIMEOUT_MS);
+
     try {
       const response = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ description, institutionId }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       const json = await response.json() as
         | { success: true; data: IntakeResponseType }
@@ -45,6 +65,7 @@ export function IntakeContainer() {
         return;
       }
 
+      // Simulate streaming by revealing text gradually
       const summary = json.data.barrierSummary;
       let index = 0;
       const interval = setInterval(() => {
@@ -56,26 +77,46 @@ export function IntakeContainer() {
           setPhase("confirming");
         }
       }, 20);
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err) {
+      clearTimeout(timeoutId);
+
+      if (err instanceof Error && err.name === "AbortError") {
+        setError(
+          "This is taking longer than expected. Please check your connection and try again."
+        );
+      } else {
+        setError("Something went wrong on our end. Please try again.");
+      }
       setPhase("input");
     }
   }
 
   async function handleConfirm() {
-    if (!intakeResult || phase === "loading") return;
-    setPhase("loading");
-    setError(null);
+    if (!intakeResult) return;
+    setPhase("loading-pathway");
+    setPathwayError(null);
+    setEmotionalMode(intakeResult.emotionalMode);
 
+    await generatePathway(intakeResult);
+  }
+
+  async function handleRetryPathway() {
+    if (!intakeResult) return;
+    setPhase("loading-pathway");
+    setPathwayError(null);
+    await generatePathway(intakeResult);
+  }
+
+  async function generatePathway(intake: IntakeResponseType) {
     try {
       const response = await fetch("/api/pathway", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          matchedBarrierIds: intakeResult.matchedBarrierIds,
-          matchedAccommodationIds: intakeResult.matchedAccommodationIds,
+          matchedBarrierIds: intake.matchedBarrierIds,
+          matchedAccommodationIds: intake.matchedAccommodationIds,
           institutionId,
-          emotionalMode: intakeResult.emotionalMode,
+          emotionalMode: intake.emotionalMode,
         }),
       });
 
@@ -84,22 +125,21 @@ export function IntakeContainer() {
         | { success: false; error: { userMessage: string } };
 
       if (!json.success) {
-        setError(json.error.userMessage);
-        setPhase("confirming");
+        setPathwayError(json.error.userMessage);
+        setPhase("pathway-error");
         return;
       }
 
       const now = new Date().toISOString();
-      setEmotionalMode(intakeResult.emotionalMode);
       setSession({
         id: Math.random().toString(36).slice(2),
         intakeSession: {
           id: Math.random().toString(36).slice(2),
-          barrierSummary: intakeResult.barrierSummary,
-          matchedBarrierIds: intakeResult.matchedBarrierIds,
-          matchedAccommodationIds: intakeResult.matchedAccommodationIds,
+          barrierSummary: intake.barrierSummary,
+          matchedBarrierIds: intake.matchedBarrierIds,
+          matchedAccommodationIds: intake.matchedAccommodationIds,
           institutionId,
-          emotionalMode: intakeResult.emotionalMode,
+          emotionalMode: intake.emotionalMode,
           createdAt: now,
         },
         pathway: json.data.pathway,
@@ -111,7 +151,7 @@ export function IntakeContainer() {
         },
         artifacts: [],
         pendingThreads: [],
-        emotionalMode: intakeResult.emotionalMode,
+        emotionalMode: intake.emotionalMode,
         languageMode: "PLAIN",
         createdAt: now,
         updatedAt: now,
@@ -119,8 +159,10 @@ export function IntakeContainer() {
 
       router.push("/pathway");
     } catch {
-      setError("Something went wrong. Please try again.");
-      setPhase("confirming");
+      setPathwayError(
+        "Something went wrong building your pathway. Please try again."
+      );
+      setPhase("pathway-error");
     }
   }
 
@@ -133,16 +175,20 @@ export function IntakeContainer() {
 
   return (
     <div className="space-y-8">
+      {/* Input phase */}
       {phase === "input" && (
         <>
           <IntakePrompt />
           <IntakeInput onSubmit={handleSubmit} isDisabled={false} />
           {error && (
-            <p className="text-sm text-warning" role="alert">{error}</p>
+            <p className="text-sm text-warning" role="alert">
+              {error}
+            </p>
           )}
         </>
       )}
 
+      {/* Streaming phase */}
       {phase === "streaming" && (
         <IntakeResponse
           barrierSummary=""
@@ -153,24 +199,74 @@ export function IntakeContainer() {
         />
       )}
 
+      {/* Confirming phase */}
       {phase === "confirming" && intakeResult && (
-        <>
-          <IntakeResponse
-            barrierSummary={intakeResult.barrierSummary}
-            isStreaming={false}
-            partialContent=""
-            onConfirm={handleConfirm}
-            onDeny={handleDeny}
-          />
-          {error && (
-            <p className="text-sm text-warning" role="alert">{error}</p>
-          )}
-        </>
+        <IntakeResponse
+          barrierSummary={intakeResult.barrierSummary}
+          isStreaming={false}
+          partialContent=""
+          onConfirm={handleConfirm}
+          onDeny={handleDeny}
+        />
       )}
 
-      {phase === "loading" && (
-        <div className="text-body text-neutral-400 animate-pulse">
-          Building your pathway...
+      {/* Loading pathway phase */}
+      {phase === "loading-pathway" && (
+        <div
+          className="rounded-card bg-white border border-neutral-200 p-6 space-y-3"
+          role="status"
+          aria-live="polite"
+        >
+          <p className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+            Building your pathway...
+          </p>
+          <p className="text-body text-neutral-500">
+            We are mapping your situation to the support you are entitled to.
+            This takes a few seconds.
+          </p>
+          <div className="flex gap-1 mt-2" aria-hidden="true">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full bg-primary-300 animate-pulse"
+                style={{ animationDelay: `${i * 150}ms` }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Pathway error phase — retry without losing confirmed barrier */}
+      {phase === "pathway-error" && intakeResult && (
+        <div className="space-y-6">
+          <div
+            className="rounded-card bg-white border border-neutral-200 p-6 space-y-4"
+            role="region"
+            aria-label="PROXY response"
+          >
+            <p className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+              We understood your situation
+            </p>
+            <p className="text-body text-neutral-700 leading-relaxed">
+              {intakeResult.barrierSummary}
+            </p>
+          </div>
+
+          <div
+            className="rounded-card border border-warning bg-amber-50 p-5 space-y-4"
+            role="alert"
+          >
+            <p className="text-body text-neutral-700">
+              {pathwayError ??
+                "Something went wrong building your pathway. Your situation was understood — we just need to try again."}
+            </p>
+            <button
+              onClick={handleRetryPathway}
+              className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            >
+              Try again →
+            </button>
+          </div>
         </div>
       )}
     </div>
