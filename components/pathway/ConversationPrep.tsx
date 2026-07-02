@@ -10,17 +10,19 @@ interface ConversationPrepProps {
   barrierSummary: string;
 }
 
+type ScriptPhase = "idle" | "loading" | "ready" | "error";
+
 export function ConversationPrep({
   stepTitle,
   stepDescription,
   barrierSummary,
 }: ConversationPrepProps) {
   const [script, setScript] = useState<ConversationScript | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [phase, setPhase] = useState<ScriptPhase>("idle");
   const [error, setError] = useState<string | null>(null);
 
   async function generateScript() {
-    setLoading(true);
+    setPhase("loading");
     setError(null);
 
     try {
@@ -36,50 +38,77 @@ export function ConversationPrep({
 
       if (!json.success) {
         setError(json.error.userMessage);
+        setPhase("error");
         return;
       }
 
       setScript(json.data);
+      setPhase("ready");
     } catch {
       setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+      setPhase("error");
     }
   }
 
   return (
     <div className="mt-4">
-      {/* Loading announcement for screen readers */}
+      {/* Screen reader announcements */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
-        {loading && "Generating your conversation script. Please wait."}
-        {script && "Your conversation preparation script is ready."}
-        {error && `Error: ${error}`}
+        {phase === "loading" && "Generating your conversation script. Please wait."}
+        {phase === "ready" && "Your conversation preparation script is ready."}
+        {phase === "error" && `Error: ${error ?? "Something went wrong."}`}
       </div>
 
-      {!script && (
-        <div>
+      {/* Idle or error — show generate/retry button */}
+      {(phase === "idle" || phase === "error") && (
+        <div className="space-y-3">
           <button
             onClick={generateScript}
-            disabled={loading}
-            aria-busy={loading}
-            aria-label="Generate a preparation script for this conversation"
-            className="rounded-soft border border-primary-500 px-5 py-2.5 text-sm font-medium text-primary-600 hover:bg-primary-50 transition-colors duration-fast disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            aria-label={
+              phase === "error"
+                ? "Retry generating your conversation script"
+                : "Generate a preparation script for this conversation"
+            }
+            className="rounded-soft border border-primary-500 px-5 py-2.5 text-sm font-medium text-primary-600 hover:bg-primary-50 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           >
             <span aria-hidden="true">📝 </span>
-            {loading ? "Preparing your script..." : "Prepare what to say"}
+            {phase === "error" ? "Try again" : "Prepare what to say"}
           </button>
-          {error && (
-            <p className="mt-2 text-sm text-warning" role="alert">
+
+          {phase === "error" && error && (
+            <p className="text-sm text-warning" role="alert">
               {error}
             </p>
           )}
         </div>
       )}
 
-      {script && (
+      {/* Loading state */}
+      {phase === "loading" && (
+        <div
+          className="rounded-soft border border-primary-100 bg-primary-50 px-5 py-4 space-y-2"
+          role="status"
+        >
+          <p className="text-sm font-medium text-primary-600">
+            Preparing your script...
+          </p>
+          <div className="flex gap-1" aria-hidden="true">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full bg-primary-300 animate-pulse"
+                style={{ animationDelay: `${i * 150}ms` }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Ready state — show script */}
+      {phase === "ready" && script && (
         <section
           aria-labelledby="prep-script-heading"
-          className="space-y-0 rounded-card border border-primary-100 bg-primary-50 overflow-hidden"
+          className="rounded-card border border-primary-100 bg-primary-50 overflow-hidden"
         >
           <div className="px-5 py-3 border-b border-primary-100">
             <h3
