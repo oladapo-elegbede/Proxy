@@ -1,9 +1,6 @@
 // lib/knowledge/loader.ts
-// Loads and validates all Knowledge Graph JSON files at startup.
-// Builds in-memory Maps for O(1) lookup by ID.
+// Uses static imports so Vercel bundles the JSON files correctly.
 
-import { readFileSync } from "fs";
-import { join } from "path";
 import type {
   FunctionalBarrier,
   FunctionalBarrierId,
@@ -14,47 +11,29 @@ import type {
   KnowledgeGraph,
 } from "@/lib/types";
 
-function loadJson<T>(filePath: string): T {
-  const fullPath = join(process.cwd(), filePath);
-  const raw = readFileSync(fullPath, "utf-8");
-  return JSON.parse(raw) as T;
-}
+import barriersData from "@/data/knowledge-graph/functional-barriers.json";
+import accommodationsData from "@/data/knowledge-graph/accommodations.json";
+import institutionData from "@/data/knowledge-graph/institutions/inst-state-university.json";
 
-function buildKnowledgeGraph(): KnowledgeGraph {
-  // Load raw JSON arrays
-  const rawBarriers = loadJson<FunctionalBarrier[]>(
-    "data/knowledge-graph/functional-barriers.json"
-  );
-  const rawAccommodations = loadJson<AccommodationNode[]>(
-    "data/knowledge-graph/accommodations.json"
-  );
-  const rawInstitution = loadJson<InstitutionDefinition>(
-    "data/knowledge-graph/institutions/inst-state-university.json"
-  );
+let graph: KnowledgeGraph | null = null;
 
-  // Build Maps for fast lookup
+export function getKnowledgeGraph(): KnowledgeGraph {
+  if (graph) return graph;
+
   const barriers = new Map<FunctionalBarrierId, FunctionalBarrier>();
-  for (const barrier of rawBarriers) {
+  for (const barrier of barriersData as FunctionalBarrier[]) {
     barriers.set(barrier.id, barrier);
   }
 
   const accommodations = new Map<AccommodationId, AccommodationNode>();
-  for (const accommodation of rawAccommodations) {
+  for (const accommodation of accommodationsData as AccommodationNode[]) {
     accommodations.set(accommodation.id, accommodation);
   }
 
   const institutions = new Map<InstitutionId, InstitutionDefinition>();
-  institutions.set(rawInstitution.id, rawInstitution);
+  const inst = institutionData as InstitutionDefinition;
+  institutions.set(inst.id, inst);
 
-  return { barriers, accommodations, institutions };
-}
-
-// Singleton — built once, reused on every request
-let graph: KnowledgeGraph | null = null;
-
-export function getKnowledgeGraph(): KnowledgeGraph {
-  if (!graph) {
-    graph = buildKnowledgeGraph();
-  }
+  graph = { barriers, accommodations, institutions };
   return graph;
 }
