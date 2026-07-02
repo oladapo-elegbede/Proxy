@@ -15,7 +15,10 @@ export function buildPathwaySystemPrompt(
     .join("\n");
 
   const accommodationList = accommodations
-    .map((a) => `- id: "${a.id}" | name: "${a.formalName}" | plain: "${a.plainLanguageDescription}"`)
+    .map(
+      (a) =>
+        `- id: "${a.id}" | name: "${a.formalName}" | plain: "${a.plainLanguageDescription}"`
+    )
     .join("\n");
 
   return `You are PROXY, an institutional navigation system.
@@ -49,9 +52,9 @@ RESPONSE FORMAT — return valid JSON only:
       "status": "ACTIVE" or "FUTURE",
       "title": "[plain language step title]",
       "description": "[warm, supportive description of what the student does]",
-      "actionLabel": "[short action verb phrase, e.g. 'Learn about your rights']",
+      "actionLabel": "[short action verb phrase]",
       "estimatedDurationMinutes": [number],
-      "accommodationIds": ["acc-xxx"],
+      "accommodationIds": [],
       "blockedUntilNodeId": "[stepId or omit if none]"
     }
   ],
@@ -66,10 +69,7 @@ RESPONSE FORMAT — return valid JSON only:
 Return only the JSON. No explanation. No markdown.`;
 }
 
-export function buildPathwayUserPrompt(
-  barrierSummary: string,
-  _accommodationIds: string[]
-): string {
+export function buildPathwayUserPrompt(barrierSummary: string): string {
   return `Generate a pathway for a student with these needs:
 
 Summary: "${barrierSummary}"

@@ -54,8 +54,7 @@ export async function runPathwayPipeline(
 
   const systemPrompt = buildPathwaySystemPrompt(institution, accommodations);
   const userPrompt = buildPathwayUserPrompt(
-    input.matchedBarrierIds.join(", "),
-    input.matchedAccommodationIds
+    input.matchedBarrierIds.join(", ")
   );
 
   try {
