@@ -37,7 +37,6 @@ export function IntakeContainer() {
     setPartialContent("");
     setError(null);
 
-    // Create abort controller for timeout
     const controller = new AbortController();
     abortRef.current = controller;
 
@@ -65,7 +64,6 @@ export function IntakeContainer() {
         return;
       }
 
-      // Simulate streaming by revealing text gradually
       const summary = json.data.barrierSummary;
       let index = 0;
       const interval = setInterval(() => {
@@ -79,13 +77,12 @@ export function IntakeContainer() {
       }, 20);
     } catch (err) {
       clearTimeout(timeoutId);
-
       if (err instanceof Error && err.name === "AbortError") {
         setError(
-          "This is taking longer than expected. Please check your connection and try again."
+          "This is taking longer than expected. Check your connection and try again."
         );
       } else {
-        setError("Something went wrong on our end. Please try again.");
+        setError("Something went wrong. Please try again.");
       }
       setPhase("input");
     }
@@ -96,7 +93,6 @@ export function IntakeContainer() {
     setPhase("loading-pathway");
     setPathwayError(null);
     setEmotionalMode(intakeResult.emotionalMode);
-
     await generatePathway(intakeResult);
   }
 
@@ -159,9 +155,7 @@ export function IntakeContainer() {
 
       router.push("/pathway");
     } catch {
-      setPathwayError(
-        "Something went wrong building your pathway. Please try again."
-      );
+      setPathwayError("Something went wrong. Please try again.");
       setPhase("pathway-error");
     }
   }
@@ -221,7 +215,6 @@ export function IntakeContainer() {
             Building your pathway...
           </p>
           <p className="text-body text-neutral-500">
-            We are mapping your situation to the support you are entitled to.
             This takes a few seconds.
           </p>
           <div className="flex gap-1 mt-2" aria-hidden="true">
@@ -236,7 +229,7 @@ export function IntakeContainer() {
         </div>
       )}
 
-      {/* Pathway error phase — retry without losing confirmed barrier */}
+      {/* Pathway error phase */}
       {phase === "pathway-error" && intakeResult && (
         <div className="space-y-6">
           <div
@@ -257,8 +250,10 @@ export function IntakeContainer() {
             role="alert"
           >
             <p className="text-body text-neutral-700">
-              {pathwayError ??
-                "Something went wrong building your pathway. Your situation was understood — we just need to try again."}
+              {pathwayError ?? "Something went wrong. Your situation was understood."}
+            </p>
+            <p className="text-sm text-neutral-500">
+              Try again below — it only takes a second.
             </p>
             <button
               onClick={handleRetryPathway}
