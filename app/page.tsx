@@ -13,7 +13,7 @@ export default function LandingPage() {
               PROXY
             </h1>
             <p className="text-body sm:text-large text-neutral-600 leading-relaxed">
-              Helps neurodivergent students access academic support —
+              Helps neurodivergent students access academic support
               without navigating bureaucracy alone.
             </p>
           </div>
@@ -30,7 +30,7 @@ export default function LandingPage() {
               <p className="text-body text-neutral-700 leading-relaxed">
                 Getting support at university is hard for most neurodivergent
                 students. It requires planning, self-advocacy, and navigating
-                multiple offices — exactly the things that are most difficult.
+                multiple offices exactly the things that are most difficult.
               </p>
               <p className="text-body text-primary-600 font-medium">
                 PROXY handles that for you.
@@ -111,7 +111,7 @@ export default function LandingPage() {
       <footer className="border-t border-neutral-200 px-4 sm:px-6 py-4">
         <div className="max-w-2xl mx-auto">
           <p className="text-sm text-neutral-400 text-center">
-            PROXY — Institutional Navigation for Neurodivergent Learners
+            PROXY Institutional Navigation for Neurodivergent Learners
           </p>
         </div>
       </footer>
