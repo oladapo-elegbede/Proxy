@@ -1,6 +1,4 @@
 // app/error.tsx
-// Global error boundary — catches any unexpected rendering error
-// and shows a recovery screen instead of a blank page.
 "use client";
 
 import { useEffect } from "react";
@@ -12,21 +10,22 @@ interface ErrorPageProps {
 
 export default function GlobalError({ error, reset }: ErrorPageProps) {
   useEffect(() => {
-    // Log to console in development — swap for error reporting in production
     console.error("Global error boundary caught:", error);
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4 sm:px-6">
       <div className="max-w-md w-full space-y-6 text-center">
 
-        <div>
-          <h1 className="text-heading font-semibold text-neutral-800 mb-3">
+        <div className="space-y-2">
+          <h1 className="text-heading font-semibold text-neutral-800">
             Something went wrong
           </h1>
-          <p className="text-body text-neutral-500 leading-relaxed">
-            Something unexpected happened on our end. Your information is safe
-            and nothing has been lost.
+          <p className="text-body text-neutral-500">
+            Your information is safe.
+          </p>
+          <p className="text-body text-neutral-500">
+            Nothing has been lost.
           </p>
         </div>
 
