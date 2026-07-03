@@ -20,7 +20,7 @@ export default function LandingPage() {
 
           {/* The problem */}
           <section aria-labelledby="problem-heading">
-            <div className="rounded-card bg-white border border-neutral-200 p-4 sm:p-6 space-y-2">
+            <div className="rounded-card bg-white border border-neutral-200 p-4 sm:p-6 space-y-3">
               <h2
                 id="problem-heading"
                 className="text-sm font-medium text-neutral-400 uppercase tracking-wide"
@@ -28,12 +28,12 @@ export default function LandingPage() {
                 The problem
               </h2>
               <p className="text-body text-neutral-700 leading-relaxed">
-                Getting academic support requires exactly the skills
-                neurodivergent students struggle with most — planning,
-                self-advocacy, navigating multiple offices.
+                Getting support at university is hard for most neurodivergent
+                students. It requires planning, self-advocacy, and navigating
+                multiple offices — exactly the things that are most difficult.
               </p>
               <p className="text-body text-primary-600 font-medium">
-                PROXY does that work for you.
+                PROXY handles that for you.
               </p>
             </div>
           </section>

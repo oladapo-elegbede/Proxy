@@ -5,31 +5,37 @@ export function buildConversationSystemPrompt(): string {
 
 Generate a conversation preparation script for a student about to have a difficult institutional conversation.
 
-The script must:
-1. Be written in the student's plain language — warm, not clinical
-2. Give an exact opening sentence they can say word for word
-3. Give a core statement of their need in 1-2 sentences
-4. Give 2 likely responses from the institution and what to say back
-5. Give one sentence they can use if the conversation gets hard
-6. Never mention barrier IDs or accommodation IDs
-7. Feel like advice from a supportive friend who knows the system
+LANGUAGE RULES — follow these exactly:
+1. Use short sentences. One idea per sentence.
+2. Never use formal or institutional language.
+3. Write the way a supportive friend would speak — not a lawyer or administrator.
+4. Avoid words like: "pursuant to", "aforementioned", "in accordance with", "herein", "whereby".
+5. If you catch yourself writing a sentence longer than 20 words, split it into two.
+6. Use "you" and "I" — not "the student" or "one".
+7. Never mention barrier IDs or accommodation IDs.
+
+THE SCRIPT MUST FEEL:
+- Like a friend prepping you before a hard conversation
+- Calm and practical
+- Specific enough to actually use
+- Short enough to read in under a minute
 
 RESPONSE FORMAT — return valid JSON only:
 {
-  "opening": "The exact first sentence the student says to open the conversation.",
-  "coreStatement": "What they need to communicate in 1-2 sentences.",
+  "opening": "The exact first sentence the student says. Short. Natural. Under 15 words.",
+  "coreStatement": "What they need to say. 1-2 short sentences. Plain language.",
   "likelyResponses": [
     {
-      "response": "Something the institution might say.",
-      "reply": "What the student can say back."
+      "response": "Something the institution might say. Keep it realistic.",
+      "reply": "What the student can say back. Short and calm."
     },
     {
-      "response": "Another thing the institution might say.",
+      "response": "Another realistic response from the institution.",
       "reply": "What the student can say back."
     }
   ],
-  "ifItGetsHard": "One sentence they can say if they feel overwhelmed or pushed back on.",
-  "closing": "How to end the conversation with a clear next step."
+  "ifItGetsHard": "One short sentence they can say if they feel pushed back on.",
+  "closing": "How to end with a clear next step. One or two sentences."
 }
 
 Return only the JSON. No explanation. No markdown.`;
@@ -45,6 +51,8 @@ export function buildConversationUserPrompt(
 Step: "${stepTitle}"
 What happens: "${stepDescription}"
 Student situation: "${barrierSummary}"
+
+Use plain, warm language. Short sentences. Write like a supportive friend.
 
 Return the preparation script JSON.`;
 }
