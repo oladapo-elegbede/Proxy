@@ -230,6 +230,23 @@ flowchart TB
         Neurodivergent Design Principles
 Every interaction was designed against these non-negotiable principles:
 
+## User-Centered Design
+
+PROXY was developed through iterative feedback from real neurodivergent users — not assumptions about what those users might need. Three participants tested the application across separate sessions and provided direct, specific feedback that shaped the product.
+
+| Participant | Main Feedback | Improvement Made |
+|---|---|---|
+| ADHD | Needed confidence the AI understood them before proceeding. Found lengthy instructions hard to follow. | Added barrier confirmation step before pathway generation. Shortened all instructional content throughout the interface. |
+| Dyslexia | Some sections felt like dense blocks of text. Formal language felt unnecessarily complex. | Simplified wording across the interface. Increased whitespace. Reduced paragraph length. Replaced institutional terms with plain language. |
+| Autism | Appreciated one task at a time. Wanted more predictability about what came next. | Added a "Coming Next" preview below each active step. Maintained the one-task-at-a-time principle throughout. |
+
+Every change listed above is traceable to a specific participant comment. The barrier confirmation step exists because a real user said they weren't confident the AI had understood them. The plain language pass exists because a real user found formal terms unnecessarily complex. The "Coming Next" preview exists because a real user said uncertainty about what followed each step created anxiety.
+
+This reflects the principle of **designed with, not just for** — neurodivergent users were not a target audience consulted at the end. They were active participants whose feedback directly determined what got built, what got changed, and what got removed.
+
+Full testing notes are available in [docs/user-testing.md](docs/user-testing.md).
+
+---
 Principle	Implementation
 Zero prerequisite knowledge	Student never needs to know institutional terminology
 Zero forms before trust	No intake form — open conversation first
