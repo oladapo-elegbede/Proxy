@@ -21,6 +21,13 @@ const NODE_TYPE_ICONS = {
   CONVERSATION: "💬",
 };
 
+const NODE_TYPE_LABELS = {
+  UNDERSTAND: "Learn",
+  PREPARE: "Prepare",
+  ACT: "Do",
+  CONVERSATION: "Talk",
+};
+
 export default function PathwayPage() {
   const router = useRouter();
   const session = useSessionStore((s) => s.session);
@@ -54,7 +61,6 @@ export default function PathwayPage() {
               {session.intakeSession.barrierSummary.slice(0, 50)}...
             </p>
           </div>
-          {/* Smaller counter on mobile */}
           <div
             className="text-right flex-shrink-0"
             aria-live="polite"
@@ -136,7 +142,6 @@ export default function PathwayPage() {
               }`}
             >
               <div className="flex items-start gap-3 sm:gap-4">
-                {/* Step number */}
                 <div
                   className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold ${
                     isCompleted
@@ -159,7 +164,7 @@ export default function PathwayPage() {
                       aria-hidden="true"
                     >
                       <span aria-hidden="true">{NODE_TYPE_ICONS[node.type]} </span>
-                      {node.type}
+                      {NODE_TYPE_LABELS[node.type]}
                     </span>
                   </div>
 
@@ -210,7 +215,7 @@ export default function PathwayPage() {
         })}
       </ol>
 
-      {/* Fixed bottom bar — stacks on mobile, side by side on sm+ */}
+      {/* Fixed bottom bar */}
       {activeNode && !allDone && (
         <div className="fixed bottom-0 left-0 right-0 border-t border-neutral-200 bg-white px-4 sm:px-6 py-3 pb-safe">
           <div className="max-w-2xl mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -239,7 +244,6 @@ export default function PathwayPage() {
         </div>
       )}
 
-      {/* Spacer — taller on mobile where bottom bar stacks */}
       <div className="h-32 sm:h-24" />
     </div>
   );
