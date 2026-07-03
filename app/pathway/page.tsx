@@ -48,6 +48,11 @@ export default function PathwayPage() {
   const allDone = completedCount === totalNodes;
   const progressPercent = Math.round((completedCount / totalNodes) * 100);
 
+  // Find the next step after the active one — used for "Next up" preview
+  const activeIndex = pathway.nodes.findIndex((n) => n.status === "ACTIVE");
+  const nextNode =
+    activeIndex !== -1 ? pathway.nodes[activeIndex + 1] : undefined;
+
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Header */}
@@ -163,7 +168,9 @@ export default function PathwayPage() {
                       }`}
                       aria-hidden="true"
                     >
-                      <span aria-hidden="true">{NODE_TYPE_ICONS[node.type]} </span>
+                      <span aria-hidden="true">
+                        {NODE_TYPE_ICONS[node.type]}{" "}
+                      </span>
                       {NODE_TYPE_LABELS[node.type]}
                     </span>
                   </div>
@@ -199,6 +206,7 @@ export default function PathwayPage() {
                           }
                         />
                       )}
+
                       <button
                         onClick={() => completeNode(node.id)}
                         aria-label={`Complete step ${index + 1}: ${node.title}`}
@@ -206,6 +214,19 @@ export default function PathwayPage() {
                       >
                         {node.actionLabel} →
                       </button>
+
+                      {/* Next up preview — only shown on active step, only if a next step exists */}
+                      {nextNode && (
+                        <p
+                          className="text-xs text-neutral-400 pt-1"
+                          aria-label={`Next step: ${nextNode.title}`}
+                        >
+                          <span aria-hidden="true">Next up: </span>
+                          <span className="text-neutral-500 font-medium">
+                            {nextNode.title}
+                          </span>
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
