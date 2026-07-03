@@ -13,15 +13,14 @@ export default function LandingPage() {
               PROXY
             </h1>
             <p className="text-body sm:text-large text-neutral-600 leading-relaxed">
-              The system designed to help neurodivergent students access
-              academic support — without needing to understand institutional
-              bureaucracy.
+              Helps neurodivergent students access academic support —
+              without navigating bureaucracy alone.
             </p>
           </div>
 
           {/* The problem */}
           <section aria-labelledby="problem-heading">
-            <div className="rounded-card bg-white border border-neutral-200 p-4 sm:p-6 space-y-3">
+            <div className="rounded-card bg-white border border-neutral-200 p-4 sm:p-6 space-y-2">
               <h2
                 id="problem-heading"
                 className="text-sm font-medium text-neutral-400 uppercase tracking-wide"
@@ -29,13 +28,12 @@ export default function LandingPage() {
                 The problem
               </h2>
               <p className="text-body text-neutral-700 leading-relaxed">
-                The systems built to support neurodivergent learners require
-                exactly the executive-function skills those learners struggle
-                with most. To get help with planning, you must first navigate
-                a multi-step bureaucratic process.
+                Getting academic support requires exactly the skills
+                neurodivergent students struggle with most — planning,
+                self-advocacy, navigating multiple offices.
               </p>
-              <p className="text-body text-neutral-700 leading-relaxed">
-                PROXY removes that burden entirely.
+              <p className="text-body text-primary-600 font-medium">
+                PROXY does that work for you.
               </p>
             </div>
           </section>
@@ -54,19 +52,19 @@ export default function LandingPage() {
                   step: "1",
                   title: "Describe what is hard",
                   description:
-                    "In your own words. No forms. No checkboxes. No clinical language required.",
+                    "In your own words. No forms. No diagnosis required.",
                 },
                 {
                   step: "2",
-                  title: "PROXY understands your situation",
+                  title: "PROXY understands",
                   description:
-                    "AI identifies your functional barriers and maps them to the support you are entitled to.",
+                    "AI identifies your barriers and maps them to support you are entitled to.",
                 },
                 {
                   step: "3",
-                  title: "Follow your personalised pathway",
+                  title: "Follow your pathway",
                   description:
-                    "Step by step. One action at a time. PROXY holds the map so you never get lost.",
+                    "One step at a time. PROXY holds the map.",
                 },
               ].map((item) => (
                 <li
