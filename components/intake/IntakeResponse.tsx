@@ -22,7 +22,6 @@ export function IntakeResponse({
 
   return (
     <div className="space-y-6">
-      {/* Streaming response region — aria-live announces updates to screen readers */}
       <div
         role="region"
         aria-label="PROXY response"
@@ -43,16 +42,14 @@ export function IntakeResponse({
           )}
         </p>
 
-        {/* Screen reader only — announces when streaming is complete */}
+        {/* Short screen reader announcement when streaming completes */}
         {!isStreaming && barrierSummary && (
           <p className="sr-only" role="status">
-            PROXY has finished understanding your situation. Please confirm
-            whether this is correct.
+            Done. Does this sound right?
           </p>
         )}
       </div>
 
-      {/* Confirmation buttons */}
       {!isStreaming && barrierSummary && (
         <div
           role="group"
@@ -65,18 +62,18 @@ export function IntakeResponse({
           >
             {INTAKE_COPY.confirmPrompt}
           </p>
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <button
               onClick={onConfirm}
               aria-describedby="confirm-prompt"
-              className="rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              className="w-full sm:w-auto rounded-soft bg-primary-500 px-6 py-3 text-body font-medium text-white hover:bg-primary-600 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               {INTAKE_COPY.confirmYes}
             </button>
             <button
               onClick={onDeny}
               aria-describedby="confirm-prompt"
-              className="rounded-soft border border-neutral-200 px-6 py-3 text-body font-medium text-neutral-600 hover:bg-neutral-100 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
+              className="w-full sm:w-auto rounded-soft border border-neutral-200 px-6 py-3 text-body font-medium text-neutral-600 hover:bg-neutral-100 transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
             >
               {INTAKE_COPY.confirmNo}
             </button>
