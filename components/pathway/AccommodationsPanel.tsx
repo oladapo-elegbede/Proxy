@@ -16,7 +16,7 @@ export function AccommodationsPanel({ barrierIds }: AccommodationsPanelProps) {
   return (
     <section
       aria-labelledby="accommodations-heading"
-      className="max-w-2xl mx-auto px-6 pb-6"
+      className="max-w-2xl mx-auto px-4 sm:px-6 pb-6"
     >
       <div className="rounded-card border border-primary-100 bg-primary-50 overflow-hidden">
         <div className="px-5 py-4 border-b border-primary-100">
@@ -24,24 +24,24 @@ export function AccommodationsPanel({ barrierIds }: AccommodationsPanelProps) {
             className="text-sm font-medium text-primary-600 uppercase tracking-wide"
             aria-hidden="true"
           >
-            You are entitled to
+            You can ask for
           </p>
           <h2
             id="accommodations-heading"
             className="text-body font-semibold text-neutral-800 mt-0.5"
           >
-            {accommodations.length} academic adjustment
+            {accommodations.length} support adjustment
             {accommodations.length !== 1 ? "s" : ""}
           </h2>
         </div>
 
         <ul
           className="divide-y divide-primary-100 list-none"
-          aria-label="Your academic adjustments"
+          aria-label="Your support adjustments"
         >
           {accommodations.map((acc: AccommodationSummary) => (
-            <li key={acc.id} className="px-5 py-4">
-              <h3 className="text-body font-semibold text-neutral-800 mb-1">
+            <li key={acc.id} className="px-5 py-4 space-y-1">
+              <h3 className="text-body font-semibold text-neutral-800">
                 {acc.plainLanguageDescription}
               </h3>
               <p className="text-sm text-neutral-500 leading-relaxed">
