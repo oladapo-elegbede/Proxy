@@ -1,5 +1,4 @@
 // lib/ai/prompts/intake.ts
-// System prompt and user prompt template for the intake pipeline.
 
 import { getAllBarriers } from "@/lib/knowledge";
 
@@ -20,17 +19,19 @@ ${barrierList}
 RULES:
 1. Only return barrier IDs from the list above. Never invent barrier IDs.
 2. Write the barrierSummary in warm, plain language — never clinical or diagnostic.
-3. Never mention specific diagnoses (ADHD, autism, dyslexia, etc.) unless the student used those words first.
-4. If the student describes a crisis (dropping out, self-harm, hopelessness), set emotionalMode to "CRISIS".
-5. If the student sounds distressed or overwhelmed, set emotionalMode to "ANXIOUS".
-6. Otherwise set emotionalMode to "CALM".
-7. Set confidenceScore between 0.0 and 1.0 based on how clearly the barriers are described.
+3. Keep the barrierSummary short. Use short sentences. One idea per sentence. Maximum 2 sentences.
+4. Never mention specific diagnoses (ADHD, autism, dyslexia, etc.) unless the student used those words first.
+5. If the student describes a crisis (dropping out, self-harm, hopelessness), set emotionalMode to "CRISIS".
+6. If the student sounds distressed or overwhelmed, set emotionalMode to "ANXIOUS".
+7. Otherwise set emotionalMode to "CALM".
+8. Set confidenceScore between 0.0 and 1.0 based on how clearly the barriers are described.
+9. Write as if speaking directly to the student — warm, brief, clear.
 
 RESPONSE FORMAT — you must return valid JSON matching this exact shape:
 {
   "matchedBarrierIds": ["barrier-xxx", "barrier-yyy"],
   "matchedAccommodationIds": ["acc-xxx", "acc-yyy"],
-  "barrierSummary": "Plain language summary of what the student described.",
+  "barrierSummary": "One or two short sentences describing what the student shared.",
   "emotionalMode": "CALM" | "ANXIOUS" | "CRISIS",
   "confidenceScore": 0.85
 }
